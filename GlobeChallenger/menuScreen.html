@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Globe Challenger Home</title>
+    <link rel="stylesheet" href="menuStyle.css">
+</head>
+<body>
+    <div id="mainDiv">
+        <h1>Globe Challenger</h1>
+        <div id="gameModes">  
+            <p id="gameModeText">Choose a game mode:</p>
+            <div id="gameModeButtons">
+                <button id="gameMode1" onclick="window.location.href='flagGameMode/flagGame.html'">Guess The Flag</button>
+                <button id="gameMode2" onclick="alert('Coming Soon')">Guess The Capital</button>
+            </div>
+        </div>
+    </div>
+    <video autoplay muted loop id="worldVideo">
+        <source src="video/worldrotating.mp4" type="video/mp4">
+    </video>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Flag</title>
+    <link rel="stylesheet" href="flagStyle.css">
+    
+</head>
+<body>
+    <button id="go-back" onclick="window.location.href='../menuScreen.html'"> Go Back</button>
+    <div id="main-div">
+        <h1>Guess the Flag</h1>
+        <div class="region">
+            <label for="region">Region: </label>
+            <select onchange="getRegion(this.value)">
+                <option value="all">All</option>
+                <option value="africa">Africa</option>
+                <option value="americas">Americas</option>
+                <option value="asia">Asia</option>
+                <option value="europe">Europe</option>
+                <option value="oceania">Oceania</option>
+            </select>
+        </div>
+        <div id="game-over"></div>
+        <div id="container">
+            <div id="flag-container"></div>
+            <div id="x-container"></div>
+        </div>
+        <p id="points">
+            Points: <span id="points-span">0</span>
+        </p>
+        <div id="answerSubmit">
+            <input id="country-input" type="text" placeholder="Enter your answer..." autocomplete="off">
+            <button id="sumbit-button" onclick="answerGuess()">Submit</button>
+        </div>
+    </div>
+    <div id="end-game-div">
+        <h1 id="end-game-text"></h1>
+        <p id="end-game-answer"></p>
+        <p id="final-score"> 
+            Final Score: <span id="final-score-span"></span>
+        </p>
+        <button onclick="playAgain()">Play Again</button>
+    </div>
+    <video autoplay muted loop id="worldVideo">
+        <source src="../video/worldrotating.mp4" type="video/mp4">
+    </video>
+    <script src="flagScript.js"></script>
+</body>
+</html>
