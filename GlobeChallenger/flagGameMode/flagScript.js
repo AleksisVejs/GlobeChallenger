@@ -85,7 +85,7 @@ const answerGuess = () => {
         input.value = '';
         wrongGuess();
     }
-}
+};
 
 const wrongGuess = () => {
     incorrectGuessCount++;
@@ -127,6 +127,15 @@ const endGame = () => {
 document.getElementById("country-input").addEventListener("keypress", function(event) {
     if (event.key === 'Enter') {
         answerGuess();
+    }
+});
+
+document.getElementById("rules").addEventListener("click", function() {
+    var rulesDiv = document.getElementById("rules-div");
+    if (rulesDiv.style.display === "none" || rulesDiv.style.display === "") {
+        rulesDiv.style.display = "block";
+    } else {
+        rulesDiv.style.display = "none";
     }
 });
 

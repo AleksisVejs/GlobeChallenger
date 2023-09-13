@@ -9,6 +9,12 @@
 </head>
 <body>
     <button id="go-back" onclick="window.location.href='../menuScreen.html'"> Go Back</button>
+    <button id="rules">Rules </button>
+    <div id="rules-div" style="display: none;">
+        <p>If you have 3 wrong guesses, you are <span style="color: #fd0000; text-shadow: 0 0 7px #fd0000;">eliminated</span>.</p>
+        <p>Each correct guess is worth <span style="color: #00ff15; text-shadow: 0 0 7px #00ff15;">1 point</span>.</p>
+        <p>There are <span style="color: #ffe600; text-shadow: 0 0 7px #ffe600;">5 different regions</span> to choose from.</p>
+    </div>
     <div id="main-div">
         <h1>Guess the Flag</h1>
         <div class="region">
@@ -35,7 +41,7 @@
             <button id="sumbit-button" onclick="answerGuess()">Submit</button>
         </div>
     </div>
-    <div id="end-game-div">
+    <div id="end-game-div" style="display: none;">
         <h1 id="end-game-text"></h1>
         <p id="end-game-answer"></p>
         <p id="final-score"> 
