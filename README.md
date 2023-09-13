@@ -1,6 +1,6 @@
 # Globe Challenger
 
-The most innovative global challenge ever created
+The most innovative website ever created
 
 ## About
 
