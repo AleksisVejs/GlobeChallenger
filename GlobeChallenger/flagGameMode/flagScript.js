@@ -6,9 +6,7 @@ const input = document.getElementById('country-input');
 var incorrectGuessCount = 0;
 var points = 0;
 let countryName = '';
-
 var wonGame = false;
-
 
 let countryAltSpellings = [];
 
@@ -65,6 +63,7 @@ const displayCountryFlag = () => {
         flag.src = randomCountry.flags.svg;
         flagContainer.appendChild(flag);
     } else {
+        points++;
         wonGame = true;
         endGame();
     }
@@ -114,6 +113,7 @@ const endGame = () => {
 
     if (wonGame) {
         document.getElementById('end-game-text').innerHTML = 'You won!';
+        document.getElementById('end-game-answer').innerHTML = 'You correctly guessed all the countries in the region.';
         document.getElementById('end-game-text').style.color = 'green';
         document.getElementById('end-game-text').style.textShadow = '0px 0px 7px #00ff003a';
     } else {
