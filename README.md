@@ -10,6 +10,7 @@ Welcome to Globe Challenger, a geography quiz game that challenges your knowledg
   
 ## Game Modes:
 - Guess The Flag: identify countries by their flags. 🏳️
+  
   - Flag Skipping: If you encounter a particularly challenging flag, you have the option to skip and move on to the next one. ⏭️
   - Game Over Mechanism: Beware of incorrect guesses; accumulate three strikes, and your game comes to an end. ❌
   - Earn Valuable Points: Correct answers accumulate valuable points. 🎯💯
