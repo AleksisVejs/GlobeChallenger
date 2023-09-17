@@ -24,6 +24,6 @@ Globe Challenger not only entertains but also enriches your understanding of wor
 - Educators: Utilize Globe Challenger as an engaging teaching resource in the classroom.
 - Geography Enthusiasts: Test and expand your expertise in world flags and regions.
 
-**Created by [Aleksis Vējš]**
+**Created by Aleksis Vējš**
 
 
