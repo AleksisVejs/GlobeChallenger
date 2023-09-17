@@ -5,7 +5,6 @@
 1. [Introduction](#introduction)
 2. [Features](#features)
 3. [Game Modes](#game-modes)
-    - [Guess The Flag](#guess-the-flag)
 4. [Educational Experience](#educational-experience)
 
 # Introduction
