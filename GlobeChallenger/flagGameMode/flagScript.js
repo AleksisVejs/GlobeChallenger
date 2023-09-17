@@ -118,24 +118,30 @@ const skipFlag = () => {
     skippedFlag = true;
     displayCountryFlag();
     
-    // Update the skipped country's name in the new div
-    const skippedCountryDiv = document.getElementById('skipped-country');
     const skippedCountryNameSpan = document.getElementById('skipped-country-name');
     
     skippedCountryNameSpan.textContent = skippedCountryName;
+    
+    skippedCountryDiv.style.opacity = '1';
     skippedCountryDiv.style.display = 'block';
     
-    // Cancel the previous timer, if any
     if (skipTimeout) {
         clearTimeout(skipTimeout);
     }
     
-    // Hide the skipped country div after 3 seconds (adjust the delay as needed)
+    // Clear any existing fade-out animations
+    skippedCountryDiv.style.transition = '';
+    
     skipTimeout = setTimeout(() => {
-        skippedCountryDiv.style.display = 'none';
-    }, 3000); // 3000 milliseconds (3 seconds)
+        skippedCountryDiv.style.transition = 'opacity 1s ease-in-out';
+        skippedCountryDiv.style.opacity = '0';
+        
+        skippedCountryDiv.addEventListener('transitionend', () => {
+            skippedCountryDiv.style.display = 'none';
+            skippedCountryDiv.style.transition = '';
+        }, { once: true });
+    }, 2000);
 }
-
 
 const endGame = () => {
     document.getElementById('main-div').style.display = 'none';
@@ -148,6 +154,7 @@ const endGame = () => {
         document.getElementById('end-game-answer').innerHTML = 'You correctly guessed <span style="color: #00ff15; text-shadow: 0 0 7px #00ff15;">all the countries</span> in the region.';
         document.getElementById('end-game-text').style.color = '#00ff15';
         document.getElementById('end-game-text').style.textShadow = '0px 0px 7px #00ff15';
+        document.getElementById('end-game-div').style.border = '6px solid #00ff15';
     }
     if (skippedFlag) {
         document.getElementById('end-game-div').style.boxShadow = '0px 0px 20px #ffe600';
@@ -156,6 +163,7 @@ const endGame = () => {
         document.getElementById('end-game-answer').innerHTML = 'You guessed <span style="color: #ffe600; text-shadow: 0 0 7px #ffe600;">' + points + ' ' + pointText + '</span> correctly.';
         document.getElementById('end-game-text').style.color = '#ffe600';
         document.getElementById('end-game-text').style.textShadow = '0px 0px 7px #ffe600';
+        document.getElementById('end-game-div').style.border = '6px solid #ffe600';
     }    
     if (incorrectGuessCount >= 3){
         document.getElementById('end-game-div').style.boxShadow = '0px 0px 20px #fd0000';
@@ -163,6 +171,7 @@ const endGame = () => {
         document.getElementById('end-game-answer').innerHTML = 'You ran out of <span style="color: #fd0000; text-shadow: 0 0 7px #fd0000;">guesses</span>. <br> The answer was <span style="color: #00ff15; text-shadow: 0 0 7px #00ff15;">' + countryName + '</span>.';
         document.getElementById('end-game-text').style.color = '#fd0000';
         document.getElementById('end-game-text').style.textShadow = '0px 0px 7px #fd0000';
+        document.getElementById('end-game-div').style.border = '6px solid #fd0000';
     }
 }
 
@@ -175,9 +184,15 @@ document.getElementById("country-input").addEventListener("keypress", function(e
 document.getElementById("rules").addEventListener("click", function() {
     var rulesDiv = document.getElementById("rules-div");
     if (rulesDiv.style.display === "none" || rulesDiv.style.display === "") {
-        rulesDiv.style.display = "block";
+        rulesDiv.style.display = "block"; // Show the element
+        setTimeout(function() {
+            rulesDiv.style.opacity = "1"; // Set opacity to 1 to fade in
+        }, 10); // Adjust the time to match the transition duration
     } else {
-        rulesDiv.style.display = "none";
+        rulesDiv.style.opacity = "0"; // Set opacity to 0 to fade out
+        setTimeout(function() {
+            rulesDiv.style.display = "none"; // Hide the element after the fade-out
+        }, 300);
     }
 });
 

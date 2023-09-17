@@ -29,6 +29,7 @@ h1
     margin-left: 20%;
     margin-right: 20%;
     padding: 15px;
+    border: 6px solid #a3ffb3;
 }
 
 #results
@@ -100,6 +101,7 @@ img
     width: 750px;
     height: 450px;
     object-fit: contain;
+    transition: all 0.3s ease;
 }
 
 #container
@@ -176,8 +178,9 @@ label
     border-style: solid;
     border-color: #1b1b1b;
     margin: 12% 35% 12% 35%;
-    padding: 20px;
+    padding: 40px;
     border-width: 20px 5px 35px 5px; 
+    border: 6px solid #a3ffb3;
 }
 
 #end-game-text 
@@ -273,6 +276,9 @@ label
     font-size: 14px;
     color: #fff;
     text-shadow: 0 0 7px #fff;
+    border: 4px solid #a3ffb3;
+    opacity: 0;
+    transition: opacity 0.3s ease, display 0.3s ease;
 }
 
 #skip-button
@@ -299,7 +305,9 @@ label
     text-shadow: 0 0 7px #fff;
     background-color: #1b1b1b;
     border-radius: 10px;
-    box-shadow: 0px 0px 50px 0px #a3ffb29d;
+    box-shadow: 0px 0px 50px 0px #ffe600;
     padding: 15px;
     width: 200px;
+    z-index: 1;
+    border: 4px solid #ffe600;
 }
