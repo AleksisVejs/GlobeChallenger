@@ -1,12 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 
-body 
-{
+body {
     background-color: #202020;
     color: #f1f1f1;
     font-family: 'Montserrat', sans-serif;
-    margin-top: 15%;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
 }
 
 h1 
@@ -36,21 +38,16 @@ button:hover
     cursor: pointer;
 }
 
+
 #main-div {
-    position: relative;
-    display: grid;
-    align-items: center;
-    justify-content: center;
-    margin-left: 35%;
-    margin-right: 35%;
     background-color: #1b1b1b;
     border-radius: 30px;
     box-shadow: 0px 0px 200px 0px #a3ffb3;
-    padding: 30px;
+    padding: 60px;
     border-style: solid;
     border-color: #1b1b1b;
-    border-width: 20px 5px 35px 5px;
     border: 6px solid #a3ffb3;
+    text-align: center;
 }
 
 #game-mode-text
@@ -107,7 +104,7 @@ button:hover
     width: 100px;
     position: absolute;
     top: 2%;
-    left: 93.5%;
+    left: 1%;
     border-radius: 5px;
     padding: 5px 10px;
     font-size: 16px;
@@ -120,7 +117,7 @@ button:hover
     display: none;
     position: absolute;
     top: 10%;
-    left: 87%;
+    left: 1%;
     background-color: #1b1b1b;
     border-radius: 10px;
     box-shadow: 0px 0px 50px 0px #a3ffb29d;
@@ -169,4 +166,20 @@ button:hover
         text-shadow: 0 0 20px #ffe600;
     }
 
+}
+
+#globe-image 
+{
+    position: absolute;
+    top: 0;
+    left: 92%;
+    width: 150px;
+    height: 150px;
+    filter: drop-shadow(0px 0px 7px #a3ffb29d);
+    transition: all 0.3s ease;
+}
+
+#globe-image:hover
+{
+    filter: drop-shadow(0px 0px 30px #a3ffb29d);
 }
