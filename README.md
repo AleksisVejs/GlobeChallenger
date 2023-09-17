@@ -1,10 +1,19 @@
-# Globe Challenger
+# Globe Challenger : Geography Quiz Game
 
-The most innovative website ever created.
+Welcome to Globe Challenger, a geography quiz game that challenges your knowledge of countries and their flags. Test your geographical prowess with this educational and engaging web-based game.
 
-## About
+## Features:
 
-Globe Challenger is designed to help users improve their knowledge of countries in an entertaining way. It provides various mini-games such as flag guessing and capital city quizzes to make the learning experience enjoyable.
+- Game Modes: Globe Challenger offers multiple game modes.
+- - Guess The Flag: identify countries by their flags
+    
+- Explore Different Regions: Choose your preferred region from Africa, Americas, Asia, Europe, and Oceania, or take on a comprehensive global challenge.
+
+- Earn Valuable Points: Correct answers accumulate valuable points. Can you achieve a perfect score by answering them all correctly?
+
+- Flag Skipping: If you encounter a particularly challenging flag, you have the option to skip and move on to the next one.
+
+- Game Over Mechanism: Beware of incorrect guesses; accumulate three strikes, and your game comes to an end. Can you avoid elimination and emerge victorious?
 
 ### Contribution
 
