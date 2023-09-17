@@ -2,6 +2,14 @@
 
 Welcome to Globe Challenger, a geography quiz game that challenges your knowledge of countries. Test your geographical knowledge with this educational and engaging web-based game. 🧠
 
+# Table of Contents
+
+1. [Introduction](#introduction)
+2. [Features](#features)
+3. [Game Modes](#game-modes)
+    - [Guess The Flag](#guess-the-flag)
+4. [Educational Experience](#educational-experience)
+
 ## Features:
 
 - Explore Global Diversity: Choose your preferred region from Africa, Americas, Asia, Europe, and Oceania, or take on a comprehensive global challenge. 🌎
