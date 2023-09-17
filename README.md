@@ -5,7 +5,7 @@ Welcome to Globe Challenger, a geography quiz game that challenges your knowledg
 ## Features:
 
 - Game Modes: Globe Challenger offers multiple game modes.
-- - Guess The Flag: identify countries by their flags
+  - Guess The Flag: identify countries by their flags
     
 - Explore Different Regions: Choose your preferred region from Africa, Americas, Asia, Europe, and Oceania, or take on a comprehensive global challenge.
 
