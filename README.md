@@ -1,10 +1,10 @@
 # Globe Challenger : Geography Quiz Game 🌎
 
-Welcome to Globe Challenger, a geography quiz game that challenges your knowledge of countries. Test your geographical knowledge with this educational and engaging web-based game. 🧠🌍
+Welcome to Globe Challenger, a geography quiz game that challenges your knowledge of countries. Test your geographical knowledge with this educational and engaging web-based game. 🧠
 
 ## Features:
 
-- Explore Global Diversity: Choose your preferred region from Africa, Americas, Asia, Europe, and Oceania, or take on a comprehensive global challenge. 🌍🌏🌎
+- Explore Global Diversity: Choose your preferred region from Africa, Americas, Asia, Europe, and Oceania, or take on a comprehensive global challenge. 🌎
 
 - Educational Value: Globe Challenger not only tests your geography knowledge but also enhances your understanding of world flags and regions. 📚
   
