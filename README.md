@@ -1,6 +1,6 @@
 # Globe Challenger : Geography Quiz Game
 
-Welcome to Globe Challenger, a geography quiz game that challenges your knowledge of countries and their flags. Test your geographical prowess with this educational and engaging web-based game.
+Welcome to Globe Challenger, a geography quiz game that challenges your knowledge of countries. Test your geographical knowledge with this educational and engaging web-based game.
 
 ## Features:
 
