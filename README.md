@@ -1,13 +1,13 @@
 # Globe Challenger : Geography Quiz Game 🌎
 
-# Table of Contents
+## Table of Contents
 
 1. [Introduction](#introduction)
 2. [Features](#features)
 3. [Game Modes](#game-modes)
 4. [Educational Experience](#educational-experience)
 
-# Introduction
+## Introduction
 
 Welcome to Globe Challenger, a geography quiz game that challenges your knowledge of countries. Test your geographical knowledge with this educational and engaging web-based game. 🧠
 
