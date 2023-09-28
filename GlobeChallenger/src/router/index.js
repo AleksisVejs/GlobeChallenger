@@ -27,6 +27,11 @@ const routes = [
     name: "flag-game",
     component: () => import("../views/FlagGameView.vue"),
   },
+  {
+    path: "/endGame",
+    name: "end-game",
+    component: () => import("../views/EndGameView.vue"),
+  },
 ];
 
 const router = createRouter({
