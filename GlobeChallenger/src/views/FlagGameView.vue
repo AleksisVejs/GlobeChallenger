@@ -40,20 +40,29 @@
         />
       </div>
     </div>
+    <LastCountry v-if="lastCountryName" :countryName="lastCountryName" />
+    <EndGame v-if="wrongGuesses >= 3" :points="points" />
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import LastCountry from "../components/LastCountry.vue";
+import EndGame from "./EndGameView.vue";
 
 export default {
   name: "FlagGameView",
+  components: {
+    LastCountry,
+    EndGame,
+  },
   data() {
     return {
       countries: [], // List to store countries
       answer: "",
       flag: "",
       countryName: "",
+      lastCountryName: "",
       countryAltSpellings: [],
       regions: [
         { value: "all", label: "All" },
@@ -127,6 +136,7 @@ export default {
     },
 
     skipFlag() {
+      this.lastCountryName = this.countryName;
       this.countries = this.countries.filter(
         (country) => country.name.common !== this.countryName
       );

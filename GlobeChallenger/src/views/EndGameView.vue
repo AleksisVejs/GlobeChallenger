@@ -11,6 +11,9 @@
 <script>
 export default {
   name: "EndGameView",
+  props: {
+    points: Number,
+  },
   methods: {
     playAgain() {
       this.$router.push("/");
