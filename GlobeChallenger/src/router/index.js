@@ -32,6 +32,21 @@ const routes = [
     name: "end-game",
     component: () => import("../views/EndGameView.vue"),
   },
+  {
+    path: "/wonGame",
+    name: "won-game",
+    component: () => import("../views/WonGameView.vue"),
+  },
+  {
+    path: "/triedGame",
+    name: "tried-game",
+    component: () => import("../views/TriedGameView.vue"),
+  },
+  {
+    path: "/dashboard",
+    name: "dashboard",
+    component: () => import("../views/DashboardView.vue"),
+  },
 ];
 
 const router = createRouter({

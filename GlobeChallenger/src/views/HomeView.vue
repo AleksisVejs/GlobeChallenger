@@ -2,11 +2,27 @@
   <div class="home">
     <div class="main-div">
       <div id="game-modes">
-        <h1 id="game-mode-text">Choose a game mode:</h1>
+        <h1 id="game-mode-text">
+          <font-awesome-icon
+            :icon="['fas', 'gamepad']"
+            size="sm"
+            style="color: #a3ffb3; filter: drop-shadow(0 0 3px #a3ffb3)"
+          />
+          Choose a game mode:
+        </h1>
         <div id="game-mode-buttons">
-          <button @click="navigateToFlagGame">Guess The Flag</button>
-          <button>Work In Progress</button>
-          <button>Work In Progress</button>
+          <button @click="navigateToFlagGame">
+            <font-awesome-icon :icon="['fas', 'flag']" size="sm" class="icon" />
+            Guess The Flag
+          </button>
+          <button>
+            <font-awesome-icon :icon="['fas', 'gear']" size="sm" class="icon" />
+            Work In Progress
+          </button>
+          <button>
+            <font-awesome-icon :icon="['fas', 'gear']" size="sm" class="icon" />
+            Work In Progress
+          </button>
         </div>
       </div>
     </div>
@@ -86,5 +102,15 @@ export default {
   color: #1b1b1b;
   box-shadow: 0px 0px 20px 0px #a3ffb3;
   cursor: pointer;
+}
+
+.icon {
+  color: #a3ffb3;
+  filter: drop-shadow(0 0 3px #a3ffb3);
+  transition: color 0.3s; /* Add transition for the color */
+}
+
+#game-mode-buttons button:hover .icon {
+  color: #000000;
 }
 </style>

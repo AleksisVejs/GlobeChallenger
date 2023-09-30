@@ -28,7 +28,10 @@
         <img id="x-image" src="../assets/x.png" v-if="showXImage" />
         <img id="flag" :src="flag" />
       </div>
-      <button id="skip-button" @click="skipFlag">Skip</button>
+      <button id="skip-button" @click="skipFlag">
+        <font-awesome-icon icon="forward" />
+        Skip
+      </button>
       <div id="answerSubmit">
         <input
           @keyup.enter="submitAnswer"
@@ -41,20 +44,17 @@
       </div>
     </div>
     <LastCountry v-if="lastCountryName" :countryName="lastCountryName" />
-    <EndGame v-if="wrongGuesses >= 3" :points="points" />
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import LastCountry from "../components/LastCountry.vue";
-import EndGame from "./EndGameView.vue";
 
 export default {
   name: "FlagGameView",
   components: {
     LastCountry,
-    EndGame,
   },
   data() {
     return {
@@ -77,6 +77,7 @@ export default {
       countriesLeft: 0,
       wrongGuesses: 0,
       showXImage: false,
+      hasSkipButtonBeenClicked: false,
     };
   },
   methods: {
@@ -124,7 +125,17 @@ export default {
         this.countryAltSpellings = randomCountry.altSpellings;
         this.countriesLeft = filteredCountries.length;
       } else {
-        alert("No countries left!");
+        if (this.hasSkipButtonBeenClicked === false) {
+          this.$router.push({
+            name: "won-game",
+            query: { points: this.points },
+          });
+        } else {
+          this.$router.push({
+            name: "tried-game",
+            query: { points: this.points, previousCountry: this.countryName },
+          });
+        }
       }
     },
 
@@ -141,6 +152,7 @@ export default {
         (country) => country.name.common !== this.countryName
       );
       this.fetchFlag();
+      this.hasSkipButtonBeenClicked = true;
     },
 
     submitAnswer() {
@@ -161,11 +173,16 @@ export default {
         );
         this.fetchFlag();
         this.showXImage = false;
+        this.lastCountryName = null;
       } else {
         this.answer = "";
         this.wrongGuesses++;
         if (this.wrongGuesses >= 3) {
-          this.$router.push("/endgame");
+          // Redirect to EndView with points as a route parameter
+          this.$router.push({
+            name: "end-game",
+            query: { points: this.points, previousCountry: this.countryName },
+          });
         }
         this.showXImage = true;
         setTimeout(() => {
@@ -181,6 +198,9 @@ export default {
     selectedRegion() {
       this.fetchAllCountries();
       this.points = 0;
+      this.wrongGuesses = 0;
+      this.hasSkipButtonBeenClicked = false;
+      this.lastCountryName = null;
     },
   },
 };
@@ -289,9 +309,11 @@ input:focus {
 }
 
 #x-image {
-  width: 550px;
-  height: 300px;
   position: absolute;
-  z-index: 1;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 400px;
 }
 </style>

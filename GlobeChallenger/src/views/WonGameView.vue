@@ -1,10 +1,7 @@
 <template>
-  <div class="end-game">
+  <div class="won-game">
     <div class="main-div">
-      <h1 id="end-game-text">You Lost</h1>
-      <p id="previous-country">
-        The previous country was {{ $route.query.previousCountry }}
-      </p>
+      <h1 id="won-game-text">You Won</h1>
       <p id="final-score">Final Score: {{ $route.query.points }}</p>
       <button id="play-again-button" @click="playAgain">Play Again</button>
     </div>
@@ -13,7 +10,7 @@
 
 <script>
 export default {
-  name: "EndGameView",
+  name: "WonGameView",
   methods: {
     playAgain() {
       this.$router.push("/flagGame");
@@ -23,7 +20,7 @@ export default {
 </script>
 
 <style scoped>
-.end-game {
+.won-game {
   position: relative;
   color: #f1f1f1;
   font-family: "Montserrat", sans-serif;
@@ -37,27 +34,23 @@ export default {
 .main-div {
   background-color: #20202071;
   border-radius: 30px;
-  box-shadow: 0px 0px 200px 0px #ff0000;
+  box-shadow: 0px 0px 200px 0px #48ff00;
   padding: 70px;
   padding-top: 25px;
   border-style: solid;
   border-color: #1b1b1b;
-  border: 6px solid #ff0000;
+  border: 6px solid #48ff00;
   text-align: center;
 }
 
-#end-game-text {
-  color: #ff0000;
+#won-game-text {
+  color: #48ff00;
   font-size: 2rem;
-  text-shadow: 0 0 9px #ff0000;
+  text-shadow: 0 0 9px #48ff00;
 }
 
 #final-score {
   font-size: 1.5rem;
-}
-
-#previous-country {
-  font-size: 1.1rem;
 }
 
 #play-again-button {

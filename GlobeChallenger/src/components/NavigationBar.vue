@@ -5,7 +5,14 @@
       <router-link to="/about">About</router-link>
     </div>
     <div class="header">
-      <h1>Globe Challenger</h1>
+      <h1>
+        <font-awesome-icon
+          :icon="['fas', 'globe-americas']"
+          size="sm"
+          style="color: #a3ffb3; filter: drop-shadow(0 0 5px #a3ffb3)"
+        />
+        Globe Challenger
+      </h1>
     </div>
     <div class="right-links">
       <router-link to="/login">Login</router-link>

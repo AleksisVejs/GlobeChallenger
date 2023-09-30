@@ -8,6 +8,7 @@
 
 <script>
 import NavigationBar from "./components/NavigationBar.vue";
+
 export default {
   name: "App",
   components: {
@@ -44,6 +45,8 @@ p {
   left: 0;
   width: 100%;
   z-index: 0;
+  min-height: 100%;
+  min-width: 100%;
 }
 
 button {

@@ -1,7 +1,7 @@
 <template>
-  <div class="end-game">
+  <div class="tried-game">
     <div class="main-div">
-      <h1 id="end-game-text">You Lost</h1>
+      <h1 id="tried-game-text">You Tried!</h1>
       <p id="previous-country">
         The previous country was {{ $route.query.previousCountry }}
       </p>
@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: "EndGameView",
+  name: "TriedGameView",
   methods: {
     playAgain() {
       this.$router.push("/flagGame");
@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style scoped>
-.end-game {
+.tried-game {
   position: relative;
   color: #f1f1f1;
   font-family: "Montserrat", sans-serif;
@@ -37,19 +37,19 @@ export default {
 .main-div {
   background-color: #20202071;
   border-radius: 30px;
-  box-shadow: 0px 0px 200px 0px #ff0000;
+  box-shadow: 0px 0px 200px 0px #e5ff00;
   padding: 70px;
   padding-top: 25px;
   border-style: solid;
   border-color: #1b1b1b;
-  border: 6px solid #ff0000;
+  border: 6px solid #e5ff00;
   text-align: center;
 }
 
-#end-game-text {
-  color: #ff0000;
+#tried-game-text {
+  color: #e5ff00;
   font-size: 2rem;
-  text-shadow: 0 0 9px #ff0000;
+  text-shadow: 0 0 9px #e5ff00;
 }
 
 #final-score {
