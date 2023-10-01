@@ -47,6 +47,16 @@ const routes = [
     name: "dashboard",
     component: () => import("../views/DashboardView.vue"),
   },
+  {
+    path: "/populationGame",
+    name: "population-game",
+    component: () => import("../views/PopulationGameView.vue"),
+  },
+  {
+    path: "/populationResult",
+    name: "population-result",
+    component: () => import("../views/PopulationResultView.vue"),
+  },
 ];
 
 const router = createRouter({

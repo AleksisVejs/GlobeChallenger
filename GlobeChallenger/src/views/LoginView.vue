@@ -41,9 +41,14 @@
               required
             />
           </div>
-          <div class="remember-me-group">
-            <input type="checkbox" id="remember-me" v-model="isChecked" />
-            <label for="remember-me">Remember Me</label>
+          <div id="inputPreview">
+            <input
+              name="cssCheckbox"
+              id="demo_opt_1"
+              type="checkbox"
+              class="css-checkbox"
+            />
+            <label for="demo_opt_1">Remember Me</label>
           </div>
           <button type="submit" @click.prevent="login">Login</button>
         </form>
@@ -176,24 +181,57 @@ export default {
   margin-top: 20px;
   height: 40px;
 }
-
-.remember-me-group {
+.css-checkbox {
+  position: absolute;
+  z-index: -1000;
+  left: -1000px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+#inputPreview {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
-
-#remember-me {
-  box-shadow: none;
-  padding: 0;
-  width: 15px;
-  height: 15px;
+.css-checkbox + label {
+  position: relative;
+  font-size: 14px;
   cursor: pointer;
-}
-
-.remember-me-group label {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
   color: #ffffff;
   text-shadow: 0 0 9px #ffffff;
-  font-size: 0.9rem;
+  user-select: none;
+}
+.css-checkbox + label:before {
+  content: "";
+  display: inline-block;
+  vertical-align: -25%;
+  height: 20px;
+  width: 20px;
+  background: transparent;
+  border: 0.5px solid #ffffff;
+  border-radius: 3px;
+  margin-right: 10px;
+  box-shadow: 0 0 5px #ffffff;
+}
+
+.css-checkbox:checked + label:before {
+  content: "\2713"; /* Checkmark symbol */
+  display: inline-block;
+  vertical-align: -25%;
+  height: 20px;
+  width: 20px;
+  border: 0.5px solid #a3ffb3;
+  border-radius: 3px;
+  margin-right: 10px;
+  box-shadow: 0 0 5px #a3ffb2;
 }
 
 .icon-glow {

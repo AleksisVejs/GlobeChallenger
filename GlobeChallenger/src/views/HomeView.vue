@@ -15,9 +15,13 @@
             <font-awesome-icon :icon="['fas', 'flag']" size="sm" class="icon" />
             Guess The Flag
           </button>
-          <button>
-            <font-awesome-icon :icon="['fas', 'gear']" size="sm" class="icon" />
-            Work In Progress
+          <button @click="navigateToPopulationGame">
+            <font-awesome-icon
+              :icon="['fas', 'users']"
+              size="sm"
+              class="icon"
+            />
+            Guess The Population
           </button>
           <button>
             <font-awesome-icon :icon="['fas', 'gear']" size="sm" class="icon" />
@@ -35,6 +39,9 @@ export default {
   methods: {
     navigateToFlagGame() {
       this.$router.push("/flagGame");
+    },
+    navigateToPopulationGame() {
+      this.$router.push("/populationGame");
     },
   },
 };

@@ -1,9 +1,7 @@
 <template>
   <div class="last-country">
-    <div class="main-div">
-      <h1 id="last-country-text">Previous country:</h1>
-      <p id="last-country-name">{{ countryName }}</p>
-    </div>
+    <h1 id="last-country-text">Previous country:</h1>
+    <p id="last-country-name">{{ countryName }}</p>
   </div>
 </template>
 

@@ -92,7 +92,6 @@ export default {
       }
     },
 
-    // Filter the countries based on the selected region
     filterCountriesByRegion() {
       if (this.selectedRegion === "all") {
         return this.countries;
@@ -104,22 +103,18 @@ export default {
     },
 
     async fetchFlag() {
-      // Fetch all countries if the countries list is empty
       if (this.countries.length === 0) {
         await this.fetchAllCountries();
       }
 
-      // Filter the countries based on the selected region
       const filteredCountries = this.filterCountriesByRegion();
 
       if (filteredCountries.length > 0) {
-        // Select a random country from the filtered list
         const randomIndex = Math.floor(
           Math.random() * filteredCountries.length
         );
         const randomCountry = filteredCountries[randomIndex];
 
-        // Update the flag and countryName values
         this.flag = randomCountry.flags.svg;
         this.countryName = randomCountry.name.common;
         this.countryAltSpellings = randomCountry.altSpellings;
@@ -140,7 +135,6 @@ export default {
     },
 
     selectRegion() {
-      // Call fetchFlag to update the countries list and select a new flag
       console.log("Selected region:", this.selectedRegion);
       this.fetchFlag();
       this.points = 0;
@@ -178,7 +172,6 @@ export default {
         this.answer = "";
         this.wrongGuesses++;
         if (this.wrongGuesses >= 3) {
-          // Redirect to EndView with points as a route parameter
           this.$router.push({
             name: "end-game",
             query: { points: this.points, previousCountry: this.countryName },
