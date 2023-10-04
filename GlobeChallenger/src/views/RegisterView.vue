@@ -40,6 +40,7 @@
               placeholder="Username"
               v-model="username"
               required
+              autocomplete="off"
             />
           </div>
           <div class="form-group">
@@ -57,10 +58,15 @@
               placeholder="Password"
               v-model="password"
               required
+              autocomplete="off"
             />
           </div>
           <button type="submit" @click.prevent="register">Register</button>
         </form>
+        <p class="route-to-login-text">Already an existing user?</p>
+        <router-link to="/login" class="route-to-login">
+          Click here!
+        </router-link>
       </div>
     </div>
   </div>
@@ -123,13 +129,11 @@ export default {
   background-color: #20202071;
   border-radius: 30px;
   box-shadow: 0px 0px 200px 0px #a3ffb3;
-  padding: 60px;
+  padding: 30px 150px 40px 150px;
   border-style: solid;
   border-color: #1b1b1b;
   border: 6px solid #a3ffb3;
   text-align: center;
-  padding-right: 90px;
-  padding-left: 90px;
 }
 
 .login-form {
@@ -187,7 +191,7 @@ export default {
 
 .register-form button {
   width: 210px;
-  margin-top: 20px;
+  margin-top: 15px;
   height: 40px;
 }
 
@@ -211,5 +215,27 @@ export default {
 
 .icon-glow {
   text-shadow: 0 0 5px rgba(150, 208, 160, 0.8);
+}
+
+.route-to-login {
+  color: #a3ffb3;
+  text-shadow: 0 0 9px #a3ffb3;
+  font-size: 0.9rem;
+  text-decoration: none;
+  margin-bottom: 30px;
+  transition: all 0.3s ease;
+}
+
+.route-to-login:hover {
+  color: #ffffff;
+  text-shadow: 0 0 9px #ffffff;
+}
+
+.route-to-login-text {
+  color: #ffffff;
+  text-shadow: 0 0 9px #ffffff;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+  margin-top: 20px;
 }
 </style>
