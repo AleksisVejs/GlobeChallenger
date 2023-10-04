@@ -67,6 +67,7 @@ export default {
       tempCountry: {},
       showXImage: false,
       showCorrectImage: false,
+      currentlyOnPage: true,
     };
   },
   computed: {
@@ -162,7 +163,7 @@ export default {
               this.tempCountry = Object.assign({}, this.countryTwo);
 
               this.swapCountries();
-            } else {
+            } else if (this.currentlyOnPage) {
               this.showXImage = false;
               this.$router.push({
                 name: "population-result",
@@ -175,12 +176,12 @@ export default {
     },
   },
 
-  beforeUnmount() {
-    clearInterval(this.animationInterval);
-  },
-
   mounted() {
     this.fetchAllCountries();
+  },
+
+  unmounted() {
+    this.currentlyOnPage = false;
   },
 };
 </script>
