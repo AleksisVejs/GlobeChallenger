@@ -124,14 +124,15 @@ export default {
         } else {
           this.$router.push({
             name: "tried-game",
-            query: { points: this.points, previousCountry: this.countryName },
+            query: this.lastCountryName
+              ? { points: this.points, previousCountry: this.lastCountryName }
+              : { points: this.points },
           });
         }
       }
     },
 
     selectRegion() {
-      console.log("Selected region:", this.selectedRegion);
       this.fetchFlag();
       this.points = 0;
     },
