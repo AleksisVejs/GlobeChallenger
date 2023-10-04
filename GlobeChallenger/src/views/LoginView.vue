@@ -5,7 +5,7 @@
         <h1>Login</h1>
       </div>
       <div class="login-form">
-        <form>
+        <form @submit.prevent="login">
           <div class="form-group">
             <label for="username">
               <font-awesome-icon
@@ -50,7 +50,7 @@
             />
             <label for="demo_opt_1">Remember Me</label>
           </div>
-          <button type="submit" @click.prevent="login">Login</button>
+          <button type="submit">Login</button>
         </form>
         <p class="route-to-register-text">Not an existing user?</p>
         <router-link to="/register" class="route-to-register">
@@ -62,21 +62,32 @@
 </template>
 
 <script>
+import usersData from "../users.json";
+
 export default {
-  name: "LoginView",
   data() {
     return {
       username: "",
       password: "",
-      isChecked: false,
     };
   },
   methods: {
-    login() {
-      if (this.username === "admin" && this.password === "admin") {
-        this.$router.push("/dashboard");
-      } else {
-        alert("Invalid credentials");
+    async login() {
+      try {
+        const user = usersData.find(
+          (u) => u.username === this.username && u.password === this.password
+        );
+
+        if (user) {
+          const token = user.username;
+
+          this.$store.dispatch("login", { user, token });
+          this.$router.push("/");
+        } else {
+          console.error("Login failed: Invalid credentials");
+        }
+      } catch (error) {
+        console.error("Login failed:", error);
       }
     },
   },

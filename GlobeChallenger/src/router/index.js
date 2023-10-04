@@ -43,9 +43,9 @@ const routes = [
     component: () => import("../views/TriedGameView.vue"),
   },
   {
-    path: "/dashboard",
-    name: "dashboard",
-    component: () => import("../views/DashboardView.vue"),
+    path: "/profile",
+    name: "profile",
+    component: () => import("../views/ProfileView.vue"),
   },
   {
     path: "/populationGame",

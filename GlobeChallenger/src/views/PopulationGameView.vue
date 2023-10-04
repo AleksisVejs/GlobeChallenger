@@ -91,12 +91,12 @@ export default {
     },
 
     fetchCountry() {
-      let randomCountryOne = Math.floor(Math.random() * this.countries.length);
-      let randomCountryTwo = Math.floor(Math.random() * this.countries.length);
+      let randomCountryOne, randomCountryTwo;
 
-      while (randomCountryOne === randomCountryTwo) {
+      do {
+        randomCountryOne = Math.floor(Math.random() * this.countries.length);
         randomCountryTwo = Math.floor(Math.random() * this.countries.length);
-      }
+      } while (randomCountryOne === randomCountryTwo);
 
       this.countryTwo.name = this.countries[randomCountryTwo].name.common;
       this.countryTwo.population = this.countries[randomCountryTwo].population;

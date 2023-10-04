@@ -15,11 +15,36 @@
       </h1>
     </div>
     <div class="right-links">
-      <router-link to="/login">Login</router-link>
-      <router-link to="/register">Register</router-link>
+      <router-link v-if="$store.getters.isAuthenticated" to="/profile">
+        Profile
+      </router-link>
+      <button
+        v-if="$store.getters.isAuthenticated"
+        @click="logout"
+        class="logout-button"
+      >
+        Logout
+      </button>
+      <router-link v-if="!$store.getters.isAuthenticated" to="/login">
+        Login
+      </router-link>
+      <router-link v-if="!$store.getters.isAuthenticated" to="/register">
+        Register
+      </router-link>
     </div>
   </nav>
 </template>
+
+<script>
+export default {
+  methods: {
+    logout() {
+      this.$store.dispatch("logout");
+      this.$router.push("/");
+    },
+  },
+};
+</script>
 
 <style>
 nav {
@@ -78,5 +103,30 @@ nav a:hover {
   color: rgb(255, 255, 255);
   text-shadow: 0px 0px 3px #ffffff;
   font-size: 1.5rem;
+}
+
+.logout-button {
+  font-family: "Montserrat", sans-serif;
+  color: rgba(255, 255, 255, 0.568);
+  text-decoration: none;
+  padding: 1rem;
+  font-size: 1.3rem;
+  transition: 0.3s;
+  text-shadow: 0px 0px 3px #ffffff;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  box-shadow: none;
+  margin: 0;
+}
+
+.logout-button:hover {
+  color: rgb(255, 255, 255);
+  text-shadow: 0px 0px 3px #ffffff;
+  font-size: 1.5rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  box-shadow: none;
 }
 </style>

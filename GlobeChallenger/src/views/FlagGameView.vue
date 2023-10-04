@@ -124,9 +124,7 @@ export default {
         } else {
           this.$router.push({
             name: "tried-game",
-            query: this.lastCountryName
-              ? { points: this.points, previousCountry: this.lastCountryName }
-              : { points: this.points },
+            query: { points: this.points, previousCountry: this.countryName },
           });
         }
       }

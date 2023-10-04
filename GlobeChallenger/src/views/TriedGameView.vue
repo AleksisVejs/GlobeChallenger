@@ -2,7 +2,7 @@
   <div class="tried-game">
     <div class="main-div">
       <h1 id="tried-game-text">You Tried!</h1>
-      <p id="previous-country" v-if="$route.query.previousCountry === null">
+      <p id="previous-country" v-if="$route.query.previousCountry != null">
         The previous country was {{ $route.query.previousCountry }}
       </p>
       <p id="final-score">Final Score: {{ $route.query.points }}</p>

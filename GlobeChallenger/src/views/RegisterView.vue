@@ -74,18 +74,53 @@
 
 <script>
 export default {
-  name: "RegisterView",
   data() {
     return {
       email: "",
       username: "",
       password: "",
-      isChecked: false,
     };
   },
   methods: {
     register() {
-      alert("WORK IN PROGRESS");
+      const newUser = {
+        email: this.email,
+        username: this.username,
+        password: this.password,
+      };
+
+      const existingUserData = require("../users.json");
+
+      const emailExists = existingUserData.some(
+        (user) => user.email === newUser.email
+      );
+      const usernameExists = existingUserData.some(
+        (user) => user.username === newUser.username
+      );
+
+      if (emailExists || usernameExists) {
+        alert(
+          "Email or username already exists. Please choose a different one."
+        );
+        return;
+      }
+
+      const highestId =
+        existingUserData.reduce(
+          (maxId, user) => (user.id > maxId ? user.id : maxId),
+          0
+        ) + 1;
+
+      newUser.id = highestId;
+
+      existingUserData.push(newUser);
+
+      this.email = "";
+      this.username = "";
+      this.password = "";
+
+      alert("Registration successful");
+      this.$router.push("/");
     },
   },
 };
@@ -121,7 +156,7 @@ export default {
   font-size: 1.3rem;
   text-shadow: 0 0 12px #ffffff;
   font-weight: 100;
-  margin-bottom: 40px;
+  margin-bottom: 25px;
   margin-top: 0;
 }
 
