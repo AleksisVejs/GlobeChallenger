@@ -103,10 +103,6 @@ export default {
     },
 
     async fetchFlag() {
-      if (this.countries.length === 0) {
-        await this.fetchAllCountries();
-      }
-
       const filteredCountries = this.filterCountriesByRegion();
 
       if (filteredCountries.length > 0) {
