@@ -79,6 +79,16 @@ export default {
       email: "",
       username: "",
       password: "",
+      createdAt: "",
+      flagGameScore: {
+        All: 0,
+        Europe: 0,
+        Asia: 0,
+        Africa: 0,
+        Americas: 0,
+        Oceania: 0,
+      },
+      populationGameScore: 0,
     };
   },
   methods: {
@@ -87,6 +97,9 @@ export default {
         email: this.email,
         username: this.username,
         password: this.password,
+        createdAt: new Date().toLocaleDateString(),
+        flagGameScore: this.flagGameScore,
+        populationGameScore: this.populationGameScore,
       };
 
       const existingUserData = require("../users.json");
