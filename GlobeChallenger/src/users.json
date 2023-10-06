@@ -6,6 +6,8 @@
     "password": "admin",
     "createdAt": "15/04/2021",
     "flagGameScore": {"All": 3, "Europe": 0, "Asia": 0, "Africa": 5, "Americas": 0, "Oceania": 0},
+    "flagGamePlayed": 3,
+    "populationGamePlayed": 0,
     "populationGameScore": 0
   },
   {
@@ -15,6 +17,8 @@
     "password": "montina",
     "createdAt": "17/03/2023",
     "flagGameScore": {"All": 0, "Europe": 0, "Asia": 0, "Africa": 0, "Americas": 0, "Oceania": 0},
+    "flagGamePlayed": 0,
+    "populationGamePlayed": 0,
     "populationGameScore": 0
   },
   {
@@ -24,6 +28,8 @@
     "password": "password",
     "createdAt": "9/11/2021",
     "flagGameScore": {"All": 999, "Europe": 999, "Asia": 999, "Africa": 999, "Americas": 999, "Oceania": 999},
+    "flagGamePlayed": 999,
+    "populationGamePlayed": 999,
     "populationGameScore": 999
   },
   {
@@ -33,6 +39,8 @@
     "password": "123",
     "createdAt": "21/12/2022",
     "flagGameScore": {"All": 9, "Europe": 9, "Asia": 9, "Africa": 9, "Americas": 9, "Oceania": 9},
+    "flagGamePlayed": 9,
+    "populationGamePlayed": 9,
     "populationGameScore": 9
   }
 ]

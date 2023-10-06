@@ -20,22 +20,47 @@
         <h2>Game Statistics</h2>
         <div class="game-stat">
           <div class="game-stat-title">
-            <h3>Flag Game</h3>
+            <h3>
+              Flag Game
+              <font-awesome-icon
+                class="icon-game-list"
+                id="icon-flag-game-list"
+                @click="toggleFlagGameList"
+                :icon="['fas', iconFlagGameList]"
+                size="sm"
+              />
+            </h3>
+            <ul v-if="iconFlagGameList === 'chevron-up'" class="game-stat-list">
+              <li>All: {{ user.flagGameScore.All }}</li>
+              <li>Africa: {{ user.flagGameScore.Africa }}</li>
+              <li>Americas: {{ user.flagGameScore.Americas }}</li>
+              <li>Asia: {{ user.flagGameScore.Asia }}</li>
+              <li>Europe: {{ user.flagGameScore.Europe }}</li>
+              <li>Oceania: {{ user.flagGameScore.Oceania }}</li>
+              <li>Games Played: {{ user.flagGamePlayed }}</li>
+            </ul>
           </div>
-          <ul class="game-stat-list">
-            <li><span>All:</span> {{ user.flagGameScore.All }}</li>
-            <li><span>Europe:</span> {{ user.flagGameScore.Europe }}</li>
-            <li><span>Asia:</span> {{ user.flagGameScore.Asia }}</li>
-            <li><span>Africa:</span> {{ user.flagGameScore.Africa }}</li>
-            <li><span>Americas:</span> {{ user.flagGameScore.Americas }}</li>
-            <li><span>Oceania:</span> {{ user.flagGameScore.Oceania }}</li>
-          </ul>
         </div>
         <div class="game-stat">
           <div class="game-stat-title">
-            <h3>Population Game</h3>
+            <h3>
+              Population Game
+              <font-awesome-icon
+                class="icon-game-list"
+                id="icon-population-game-list"
+                @click="togglePopulationGameList"
+                :icon="['fas', iconPopulationGameList]"
+                size="sm"
+              />
+            </h3>
+            <ul
+              v-if="iconPopulationGameList === 'chevron-up'"
+              class="game-stat-list"
+            >
+              <li>Best Score: {{ user.populationGameScore }}</li>
+              <li>Games Played: {{ user.populationGamePlayed }}</li>
+            </ul>
           </div>
-          <p class="game-stat-text">{{ user.populationGameScore }}</p>
         </div>
       </div>
     </div>
@@ -44,9 +69,37 @@
 
 <script>
 export default {
+  data() {
+    return {
+      iconFlagGameList: "chevron-down",
+      iconPopulationGameList: "chevron-down",
+    };
+  },
   computed: {
     user() {
-      return this.$store.state.user;
+      const user = this.$store.state.user;
+      if (!user || !user.flagGameScore) {
+        return {};
+      }
+      return user;
+    },
+  },
+
+  methods: {
+    toggleFlagGameList() {
+      if (this.iconFlagGameList === "chevron-down") {
+        this.iconFlagGameList = "chevron-up";
+      } else {
+        this.iconFlagGameList = "chevron-down";
+      }
+    },
+
+    togglePopulationGameList() {
+      if (this.iconPopulationGameList === "chevron-down") {
+        this.iconPopulationGameList = "chevron-up";
+      } else {
+        this.iconPopulationGameList = "chevron-down";
+      }
     },
   },
 };
@@ -162,6 +215,19 @@ export default {
   font-size: 1.2rem;
   margin: 0;
   text-shadow: 0 0 5px #a3ffb286;
+  user-select: none;
+}
+
+.icon-game-list {
+  color: #a3ffb3;
+  filter: drop-shadow(0 0 5px #a3ffb3);
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.icon-game-list:hover {
+  color: #ffffff;
+  filter: drop-shadow(0 0 5px #ffffff);
 }
 
 .game-stat-list {
