@@ -6,9 +6,9 @@
           <div class="profile-picture">
             <img src="../assets/user.png" alt="Profile Picture" />
           </div>
-          <h1>{{ user.username }}</h1>
+          <h1>{{ user ? user.username : "" }}</h1>
         </div>
-        <div class="user-info">
+        <div class="user-info" v-if="user">
           <p>Email: {{ user.email }}</p>
           <p>Joined: {{ user.createdAt }}</p>
         </div>
@@ -21,6 +21,7 @@
         <div class="game-stat">
           <div class="game-stat-title">
             <h3>
+              <font-awesome-icon :icon="['fas', 'flag']" size="sm" />
               Flag Game
               <font-awesome-icon
                 class="icon-game-list"
@@ -30,20 +31,40 @@
                 size="sm"
               />
             </h3>
-            <ul v-if="iconFlagGameList === 'chevron-up'" class="game-stat-list">
-              <li>All: {{ user.flagGameScore.All }}</li>
-              <li>Africa: {{ user.flagGameScore.Africa }}</li>
-              <li>Americas: {{ user.flagGameScore.Americas }}</li>
-              <li>Asia: {{ user.flagGameScore.Asia }}</li>
-              <li>Europe: {{ user.flagGameScore.Europe }}</li>
-              <li>Oceania: {{ user.flagGameScore.Oceania }}</li>
-              <li>Games Played: {{ user.flagGamePlayed }}</li>
+            <ul
+              v-if="user && iconFlagGameList === 'chevron-up'"
+              class="game-stat-list"
+            >
+              <li>
+                All: {{ user.flagGameScore ? user.flagGameScore.All : "" }}
+              </li>
+              <li>
+                Africa:
+                {{ user.flagGameScore ? user.flagGameScore.Africa : "" }}
+              </li>
+              <li>
+                Americas:
+                {{ user.flagGameScore ? user.flagGameScore.Americas : "" }}
+              </li>
+              <li>
+                Asia: {{ user.flagGameScore ? user.flagGameScore.Asia : "" }}
+              </li>
+              <li>
+                Europe:
+                {{ user.flagGameScore ? user.flagGameScore.Europe : "" }}
+              </li>
+              <li>
+                Oceania:
+                {{ user.flagGameScore ? user.flagGameScore.Oceania : "" }}
+              </li>
+              <li>Games played: {{ user.flagGamePlayed }}</li>
             </ul>
           </div>
         </div>
         <div class="game-stat">
           <div class="game-stat-title">
             <h3>
+              <font-awesome-icon :icon="['fas', 'users']" size="sm" />
               Population Game
               <font-awesome-icon
                 class="icon-game-list"
@@ -54,7 +75,7 @@
               />
             </h3>
             <ul
-              v-if="iconPopulationGameList === 'chevron-up'"
+              v-if="user && iconPopulationGameList === 'chevron-up'"
               class="game-stat-list"
             >
               <li>Best Score: {{ user.populationGameScore }}</li>
@@ -234,11 +255,12 @@ export default {
   list-style: none;
   padding: 0;
   margin-top: 10px;
-  text-align: left;
+  text-align: center;
 }
 
 .game-stat-list li {
   color: #ffffff;
+  text-shadow: 0 0 5px #ffffff;
   margin: 5px 0;
   font-size: 1rem;
 }

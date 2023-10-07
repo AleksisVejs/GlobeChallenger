@@ -233,6 +233,7 @@ export default {
   flex-direction: column;
   align-items: center;
   border: 6px solid #a3ffb3;
+  box-shadow: 0px 0px 15px 0px #a3ffb3;
   border-radius: 30px;
   padding: 20px;
   margin: 0 20px;
@@ -242,6 +243,7 @@ export default {
   max-width: 250px;
   max-height: 100px;
   object-fit: cover;
+  -webkit-user-drag: none;
 }
 
 #population {

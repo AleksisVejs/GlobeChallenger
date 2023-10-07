@@ -84,7 +84,7 @@ export default {
           this.$store.dispatch("login", { user, token });
           this.$router.push("/");
         } else {
-          console.error("Login failed: Invalid credentials");
+          alert("Login failed: Invalid credentials");
         }
       } catch (error) {
         console.error("Login failed:", error);

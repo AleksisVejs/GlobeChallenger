@@ -250,7 +250,7 @@ export default {
   color: rgb(255, 255, 255);
 }
 
-.flag-div {
+#flag-div {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -260,8 +260,7 @@ export default {
 #flag {
   width: 500px;
   height: 300px;
-  border-radius: 5px;
-  transition: all 0.3s ease;
+  -webkit-user-drag: none;
 }
 
 #answerSubmit {
