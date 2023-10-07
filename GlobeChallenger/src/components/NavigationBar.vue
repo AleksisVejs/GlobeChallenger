@@ -56,7 +56,7 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 5rem;
+  height: 4.5rem;
   border-radius: 2rem;
   box-shadow: 0 0 22px #a3ffb2;
   border: 5px solid #a3ffb3;

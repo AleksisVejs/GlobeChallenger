@@ -1,9 +1,11 @@
 <template>
   <div class="flag-game">
     <div class="main-div">
-      <div class="region">
-        <label for="region"></label>
-        <select v-model="selectedRegion" @change="selectRegion">
+      <div class="select-div">
+        <label for="region"
+          ><font-awesome-icon class="icon" icon="globe"
+        /></label>
+        <select v-model="selectedRegion">
           <option
             v-for="region in regions"
             :key="region.value"
@@ -12,6 +14,12 @@
             {{ region.label }}
           </option>
         </select>
+        <select v-model="selectedMode">
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+        <label for="mode"><font-awesome-icon class="icon" icon="cog" /></label>
       </div>
       <div id="results">
         <p id="points">
@@ -28,7 +36,11 @@
         <img id="x-image" src="../assets/x.png" v-if="showXImage" />
         <img id="flag" :src="flag" />
       </div>
-      <button id="skip-button" @click="skipFlag">
+      <button
+        id="skip-button"
+        @click="skipFlag"
+        :disabled="selectedMode === 'hard'"
+      >
         <font-awesome-icon icon="forward" />
         Skip
       </button>
@@ -73,11 +85,17 @@ export default {
         { value: "oceania", label: "Oceania" },
       ],
       selectedRegion: "all",
+      selectedMode: "easy",
       points: 0,
       countriesLeft: 0,
       wrongGuesses: 0,
       showXImage: false,
       hasSkipButtonBeenClicked: false,
+      modeLimits: {
+        easy: Infinity,
+        medium: 3,
+        hard: 1,
+      },
     };
   },
   methods: {
@@ -130,11 +148,6 @@ export default {
       }
     },
 
-    selectRegion() {
-      this.fetchFlag();
-      this.points = 0;
-    },
-
     skipFlag() {
       this.lastCountryName = this.countryName;
       this.countries = this.countries.filter(
@@ -148,6 +161,8 @@ export default {
       if (this.answer === "" || this.showXImage === true) {
         return;
       }
+
+      const mistakeLimit = this.modeLimits[this.selectedMode];
 
       if (
         this.answer.toLowerCase() === this.countryName.toLowerCase() ||
@@ -166,7 +181,7 @@ export default {
       } else {
         this.answer = "";
         this.wrongGuesses++;
-        if (this.wrongGuesses >= 3) {
+        if (this.wrongGuesses >= mistakeLimit) {
           this.$router.push({
             name: "end-game",
             query: { points: this.points, previousCountry: this.countryName },
@@ -184,6 +199,13 @@ export default {
   },
   watch: {
     selectedRegion() {
+      this.fetchAllCountries();
+      this.points = 0;
+      this.wrongGuesses = 0;
+      this.hasSkipButtonBeenClicked = false;
+      this.lastCountryName = null;
+    },
+    selectedMode() {
       this.fetchAllCountries();
       this.points = 0;
       this.wrongGuesses = 0;
@@ -219,13 +241,15 @@ export default {
   text-align: center;
 }
 
-.region {
+.select-div {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 5px;
 }
 
-.region select {
+.select-div select {
+  width: 100px;
   background-color: transparent;
   color: rgb(255, 255, 255);
   border: 1px solid rgb(255, 255, 255);
@@ -237,7 +261,7 @@ export default {
   transition: all 0.3s ease;
 }
 
-.region select:hover {
+.select-div select:hover {
   border: 1px solid #a3ffb3;
   background-color: #a3ffb3;
   color: #1b1b1b;
@@ -245,7 +269,7 @@ export default {
   cursor: pointer;
 }
 
-.region select option {
+.select-div select option {
   background-color: #1b1b1b;
   color: rgb(255, 255, 255);
 }
@@ -293,6 +317,14 @@ input:focus {
 #skip-button {
   width: 100px;
   margin-top: 16px;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+}
+
+#skip-button:disabled {
+  filter: blur(2px);
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 #x-image {
@@ -302,5 +334,11 @@ input:focus {
   left: 50%;
   width: 400px;
   height: 400px;
+}
+
+.icon {
+  color: #ffffff;
+  filter: drop-shadow(0 0 3px #ffffff);
+  transition: all 0.3s;
 }
 </style>

@@ -8,7 +8,10 @@
       >
         <div class="button-content">
           <font-awesome-icon :icon="['fas', 'flag']" size="2xl" class="icon" />
-          <div class="button-text">Guess The Flag</div>
+          <div class="button-text">Flag Game</div>
+          <span class="game-mode-desc"
+            >Can you guess the country by its flag?</span
+          >
         </div>
       </button>
       <button
@@ -18,7 +21,37 @@
       >
         <div class="button-content">
           <font-awesome-icon :icon="['fas', 'users']" size="2xl" class="icon" />
-          <div class="button-text">Guess The Population</div>
+          <div class="button-text">Population Game</div>
+          <span class="game-mode-desc">
+            Can you guess which country has the higher population?
+          </span>
+        </div>
+      </button>
+      <button
+        class="game-mode-buttons"
+        :style="{ animationDuration: randomDuration() + 's' }"
+      >
+        <div class="button-content">
+          <font-awesome-icon :icon="['fas', 'gear']" size="2xl" class="icon" />
+          <div class="button-text">Work In Progress</div>
+        </div>
+      </button>
+      <button
+        class="game-mode-buttons"
+        :style="{ animationDuration: randomDuration() + 's' }"
+      >
+        <div class="button-content">
+          <font-awesome-icon :icon="['fas', 'gear']" size="2xl" class="icon" />
+          <div class="button-text">Work In Progress</div>
+        </div>
+      </button>
+      <button
+        class="game-mode-buttons"
+        :style="{ animationDuration: randomDuration() + 's' }"
+      >
+        <div class="button-content">
+          <font-awesome-icon :icon="['fas', 'gear']" size="2xl" class="icon" />
+          <div class="button-text">Work In Progress</div>
         </div>
       </button>
       <button
@@ -66,9 +99,10 @@ export default {
 
 #game-modes {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 30px;
+  flex-wrap: wrap;
+  max-width: 1200px;
 }
 
 .game-mode-buttons {
@@ -76,12 +110,13 @@ export default {
   border-radius: 30px;
   box-shadow: 0px 0px 100px 0px #a3ffb3;
   padding: 60px;
+  margin: 20px;
   border-style: solid;
   border-color: #1b1b1b;
   border: 6px solid #a3ffb3;
   text-align: center;
-  width: 300px;
-  height: 300px;
+  width: 350px;
+  height: 250px;
   animation: floatUpDown 2s ease-in-out infinite;
 }
 
@@ -117,15 +152,20 @@ export default {
   margin-top: 15px;
 }
 
+.game-mode-desc {
+  font-size: 0.9rem;
+  margin-top: 15px;
+}
+
 @keyframes floatUpDown {
   0% {
-    transform: translateY(10%);
+    transform: translateY(1%);
   }
   50% {
-    transform: translateY(-4%);
+    transform: translateY(-1%);
   }
   100% {
-    transform: translateY(10%);
+    transform: translateY(1%);
   }
 }
 </style>
