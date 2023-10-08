@@ -55,7 +55,7 @@ button {
   border: 1px solid rgb(255, 255, 255);
   box-shadow: 0px 0px 7px #fff;
   text-shadow: 0px 0px 3px #fff;
-  border-radius: 5px;
+  border-radius: 30px;
   padding: 5px;
   margin: 5px;
   transition: all 0.3s ease;

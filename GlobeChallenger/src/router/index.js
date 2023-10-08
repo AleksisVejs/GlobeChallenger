@@ -28,6 +28,11 @@ const routes = [
     component: () => import("../views/FlagGameView.vue"),
   },
   {
+    path: "/flagDrawGame",
+    name: "flag-draw-game",
+    component: () => import("../views/FlagDrawGameView.vue"),
+  },
+  {
     path: "/endGame",
     name: "end-game",
     component: () => import("../views/EndGameView.vue"),

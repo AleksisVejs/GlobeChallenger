@@ -1,20 +1,19 @@
 <template>
-  <div class="last-country">
-    <h1 id="last-country-text">Previous country:</h1>
-    <p id="last-country-name">{{ countryName }}</p>
+  <div class="flag-description">
+    <p id="flag-description-text">{{ flagDesc }}</p>
   </div>
 </template>
 
 <script>
 export default {
-  name: "LastCountry",
+  name: "FlagDescription",
   props: {
-    countryName: String,
+    flagDesc: String,
   },
 };
 </script>
 <style>
-.last-country {
+.flag-description {
   position: fixed;
   top: 50%;
   right: 5%;
@@ -30,13 +29,9 @@ export default {
   border: 4px solid #ffe600;
 }
 
-#last-country-text {
-  color: #ffe600;
-  font-size: 1.9rem;
-  text-shadow: 0 0 9px #ffe600;
-}
-
-#last-country-name {
-  font-size: 1.5rem;
+#flag-description-text {
+  color: #ffffff;
+  font-size: 1.2rem;
+  text-shadow: 0 0 9px #ffffff;
 }
 </style>

@@ -29,11 +29,19 @@
       </button>
       <button
         class="game-mode-buttons"
+        @click="navigateToFlagDrawGame"
         :style="{ animationDuration: randomDuration() + 's' }"
       >
         <div class="button-content">
-          <font-awesome-icon :icon="['fas', 'gear']" size="2xl" class="icon" />
-          <div class="button-text">Work In Progress</div>
+          <font-awesome-icon
+            :icon="['fas', 'pencil']"
+            size="2xl"
+            class="icon"
+          />
+          <div class="button-text">Draw That Flag</div>
+          <span class="game-mode-desc">
+            Draw the flag from the countries description or name.
+          </span>
         </div>
       </button>
       <button
@@ -76,6 +84,9 @@ export default {
     },
     navigateToPopulationGame() {
       this.$router.push("/populationGame");
+    },
+    navigateToFlagDrawGame() {
+      this.$router.push("/flagDrawGame");
     },
     randomDuration() {
       return (Math.random() * 1 + 2).toFixed(2); //

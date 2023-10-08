@@ -254,7 +254,6 @@ export default {
 #button-guess {
   width: 100px;
   margin-top: 20px;
-  border-radius: 10px;
   font-size: 1.1rem;
   font-weight: 200;
   cursor: pointer;

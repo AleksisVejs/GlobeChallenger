@@ -17,6 +17,7 @@
     "axion": "^0.1.0",
     "axios": "^1.5.1",
     "core-js": "^3.8.3",
+    "fabric": "^5.3.0",
     "font-awesome": "^4.7.0",
     "vue": "^3.3.4",
     "vue-router": "^4.0.3",
