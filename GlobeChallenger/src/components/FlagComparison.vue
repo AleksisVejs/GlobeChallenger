@@ -33,12 +33,12 @@ export default {
   background-color: #202020dc;
   backdrop-filter: blur(10px);
   border-radius: 25px;
-  box-shadow: 0px 0px 50px 0px #ffe600;
+  box-shadow: 0px 0px 50px 0px #a3ffb3;
   padding: 30px;
   width: 600px;
   height: auto;
   z-index: 1;
-  border: 4px solid #ffe600;
+  border: 4px solid #a3ffb3;
 }
 
 .flag-comparison-container {
@@ -63,21 +63,21 @@ export default {
   width: 100%;
   height: 100%;
   border-radius: 10px;
-  border: 2px solid #ffe600;
-  box-shadow: 0px 0px 10px 0px #ffe600;
+  border: 2px solid #a3ffb3;
+  box-shadow: 0px 0px 10px 0px #a3ffb3;
 }
 
 .flag-comparison h1 {
   font-size: 20px;
   margin: 10px;
   padding: 0;
-  color: #ffe600;
-  text-shadow: 0 0 7px #fff;
+  color: #a3ffb3;
+  text-shadow: 0 0 7px #a3ffb3;
   font-family: "Montserrat", sans-serif;
 }
 
 #play-again-button {
-  margin-top: 20px;
+  margin-top: 30px;
   width: 150px;
   height: 30px;
 }

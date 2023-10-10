@@ -1,12 +1,13 @@
 <template>
   <div class="flag-draw-game">
-    <div class="main-div" :class="{ 'blur-effect': !isDrawing }">
+    <div class="main-draw-div" :class="{ 'blur-effect': !isDrawing }">
       <div class="flag-desc-div">
         <h1>
           Draw the flag of <span id="country-name-span">{{ countryName }}</span>
         </h1>
       </div>
       <div class="canvas-container">
+        <canvas id="cursor" ref="cursor" width="500" height="300"></canvas>
         <canvas
           id="canvas"
           ref="canvas"
@@ -36,8 +37,12 @@
           <font-awesome-icon icon="undo" />
           Undo
         </button>
+        <button id="redo-button" @click="redo">
+          <font-awesome-icon icon="redo" />
+          Redo
+        </button>
       </div>
-      <div id="drawing-buttons">
+      <div class="drawing-buttons">
         <button id="clear-button" @click="clearCanvas">
           <font-awesome-icon icon="trash" />
           Clear
@@ -85,16 +90,19 @@ export default {
       canvas: null,
       isDrawing: true,
       brushSize: 10,
-      brushColor: "#000000",
-      cursorOpacity: 0.5,
+      brushColor: "#ffffff",
+      undoneActions: [],
+      canvasStates: [],
       mousecursor: new fabric.Circle({
         radius: 10,
-        fill: this.brushColor,
+        fill: "#ffffff",
+        stroke: "#000000",
+        strokeWidth: 2,
         left: 0,
         top: 0,
         originX: "center",
         originY: "center",
-        opacity: this.cursorOpacity,
+        opacity: 0.3,
         selectable: false,
         hasBorders: false,
         hasControls: false,
@@ -117,11 +125,18 @@ export default {
           this.countryFlag = randomCountry.flags.svg;
         });
     },
+
     showFlagDesc() {
       this.flagDescription = !this.flagDescription;
     },
+
     clearCanvas() {
+      const canvasData = this.canvas.toDatalessJSON();
+      this.canvasStates.push(canvasData);
       this.canvas.clear();
+
+      this.canvas.add(this.mousecursor);
+      this.canvas.renderAll();
     },
 
     submitDrawing() {
@@ -132,20 +147,41 @@ export default {
 
     updateBrushColor() {
       this.canvas.freeDrawingBrush.color = this.brushColor;
-      this.mousecursor.fill = this.brushColor;
     },
 
     updateCursorSize() {
       var size = parseInt(this.brushSize);
       this.canvas.freeDrawingBrush.width = size;
+      this.mousecursor.set({
+        radius: size / 2,
+      });
+      this.mousecursor.setCoords();
+      this.canvas.renderAll();
+    },
+
+    redo() {
+      if (this.undoneActions.length > 0) {
+        const lastUndoneAction = this.undoneActions.pop();
+        this.canvas.add(lastUndoneAction);
+        this.canvas.renderAll();
+      }
     },
 
     undo() {
-      var canvas = this.canvas;
-      var lastItem = canvas._objects[canvas._objects.length - 1];
-      if (lastItem) {
-        this.canvas.remove(lastItem);
-        this.canvas.renderAll();
+      const canvas = this.canvas;
+      const filteredObjects = canvas._objects.filter(
+        (object) => object !== this.mousecursor
+      );
+
+      if (filteredObjects.length > 0) {
+        const lastItem = filteredObjects[filteredObjects.length - 1];
+        this.undoneActions.push(lastItem);
+        canvas.remove(lastItem);
+        canvas.renderAll();
+      }
+      if (this.canvasStates.length > 0) {
+        const canvasStateToUndo = this.canvasStates.pop();
+        this.canvas.loadFromJSON(canvasStateToUndo);
       }
     },
   },
@@ -154,9 +190,33 @@ export default {
     this.fetchCountry();
     this.canvas = new fabric.Canvas(this.$refs.canvas, {
       isDrawingMode: true,
+      selection: false,
+      freeDrawingCursor: "none",
     });
+
     this.canvas.freeDrawingBrush.width = this.brushSize;
     this.canvas.freeDrawingBrush.color = this.brushColor;
+
+    this.canvas.add(this.mousecursor);
+
+    this.canvas.on("mouse:move", (event) => {
+      const mouse = this.canvas.getPointer(event.e);
+      this.mousecursor.left = mouse.x;
+      this.mousecursor.top = mouse.y;
+      this.canvas.bringToFront(this.mousecursor);
+      this.mousecursor.setCoords();
+      this.canvas.renderAll();
+    });
+
+    this.canvas.on("mouse:down", () => {
+      this.mousecursor.setCoords();
+      this.canvas.renderAll();
+    });
+
+    this.canvas.on("mouse:up", () => {
+      this.mousecursor.setCoords();
+      this.canvas.renderAll();
+    });
   },
 
   watch: {
@@ -192,7 +252,7 @@ export default {
   z-index: 1;
 }
 
-.main-div {
+.main-draw-div {
   width: 700px;
   text-align: center;
   display: flex;
@@ -244,14 +304,14 @@ export default {
   width: 200px;
 }
 
-#drawing-buttons {
+.drawing-buttons {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 }
 
-#drawing-buttons button {
+.drawing-buttons button {
   width: 100px;
   height: 30px;
   border-radius: 30px;
@@ -279,5 +339,11 @@ export default {
 
 .blur-effect {
   filter: blur(5px);
+}
+
+#cursor {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none !important;
 }
 </style>
