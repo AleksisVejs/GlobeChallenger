@@ -62,5 +62,6 @@ export default {
 
 #play-again-button {
   width: 100px;
+  margin: 0;
 }
 </style>

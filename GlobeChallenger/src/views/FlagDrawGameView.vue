@@ -169,16 +169,15 @@ export default {
     },
 
     undo() {
-      const canvas = this.canvas;
-      const filteredObjects = canvas._objects.filter(
+      const filteredObjects = this.canvas._objects.filter(
         (object) => object !== this.mousecursor
       );
 
       if (filteredObjects.length > 0) {
         const lastItem = filteredObjects[filteredObjects.length - 1];
         this.undoneActions.push(lastItem);
-        canvas.remove(lastItem);
-        canvas.renderAll();
+        this.canvas.remove(lastItem);
+        this.canvas.renderAll();
       }
       if (this.canvasStates.length > 0) {
         const canvasStateToUndo = this.canvasStates.pop();
