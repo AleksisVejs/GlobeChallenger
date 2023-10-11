@@ -140,6 +140,7 @@ export default {
     },
 
     submitDrawing() {
+      this.canvas.remove(this.mousecursor);
       this.isDrawing = false;
       this.flag = this.canvas.toDataURL();
       this.flagDescription = false;
