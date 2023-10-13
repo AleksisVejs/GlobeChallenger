@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <div class="main-div">
+    <div class="about-main-div">
       <div class="about-header">
         <h1>About</h1>
       </div>
@@ -14,68 +14,25 @@
         knowledge of countries. Test your geographical knowledge with this
         educational and engaging web-based game.
       </p>
-      <div class="about-list">
-        <font-awesome-icon
-          :icon="['fas', 'flag']"
-          size="sm"
-          style="color: #a3ffb3; filter: drop-shadow(0 0 5px #a3ffb3)"
-        />
-        Flag Game - Guess the country based on the flag.
-        <font-awesome-icon
-          class="icon-game-list"
-          id="icon-flag-game-list"
-          @click="toggleList(1)"
-          :icon="['fas', listIcon1]"
-          size="sm"
-        />
-        <ul v-if="listIcon1 === 'chevron-up'" class="about-list-down">
-          <li>
-            You will be presented with a flag, and your objective is to
-            determine the country to which the flag belongs.
-          </li>
-        </ul>
-      </div>
-      <div class="about-list">
-        <font-awesome-icon
-          :icon="['fas', 'users']"
-          size="sm"
-          style="color: #a3ffb3; filter: drop-shadow(0 0 5px #a3ffb3)"
-        />
-        Population Game - Higher or Lower population.
-        <font-awesome-icon
-          class="icon-game-list"
-          id="icon-flag-game-list"
-          @click="toggleList(2)"
-          :icon="['fas', listIcon2]"
-          size="sm"
-        />
-        <ul v-if="listIcon2 === 'chevron-up'" class="about-list-down">
-          <li>
-            Try to figure out whether one country has a larger or smaller
-            population than another.
-          </li>
-        </ul>
-      </div>
-      <div class="about-list">
-        <font-awesome-icon
-          :icon="['fas', 'paint-brush']"
-          size="sm"
-          style="color: #a3ffb3; filter: drop-shadow(0 0 5px #a3ffb3)"
-        />
-        Draw That Flag - Draw the flag of the country.
-        <font-awesome-icon
-          class="icon-game-list"
-          id="icon-flag-game-list"
-          @click="toggleList(3)"
-          :icon="['fas', listIcon3]"
-          size="sm"
-        />
-        <ul v-if="listIcon3 === 'chevron-up'" class="about-list-down">
-          <li>
-            Your task is to create a near-perfect replica of the given country's
-            flag.
-          </li>
-        </ul>
+      <div class="about-list" v-for="(list, index) in lists" :key="index">
+        <div @click="toggleList(index)">
+          <font-awesome-icon
+            :icon="['fas', list.icon]"
+            size="sm"
+            style="color: #a3ffb3; filter: drop-shadow(0 0 5px #a3ffb3)"
+          />
+          {{ list.title }}
+          <font-awesome-icon
+            class="icon-game-list"
+            :icon="['fas', list.isOpen ? 'chevron-up' : 'chevron-down']"
+            size="sm"
+          />
+        </div>
+        <transition name="slide">
+          <ul v-if="list.isOpen" class="about-list-down">
+            <li>{{ list.description }}</li>
+          </ul>
+        </transition>
       </div>
     </div>
   </div>
@@ -85,41 +42,43 @@
       size="sm"
       style="color: #a3ffb3; filter: drop-shadow(0 0 5px #a3ffb3)"
     />
-    Created by Aleksis Vējš</span
-  >
+    Created by Aleksis Vējš
+  </span>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      listIcon1: "chevron-down",
-      listIcon2: "chevron-down",
-      listIcon3: "chevron-down",
+      lists: [
+        {
+          title: "Flag Game - Guess the country based on the flag.",
+          icon: "flag",
+          description:
+            "You will be presented with a flag, and your objective is to determine the country to which the flag belongs.",
+          isOpen: false,
+        },
+        {
+          title: "Population Game - Higher or Lower population.",
+          icon: "users",
+          description:
+            "Try to figure out whether one country has a larger or smaller population than another.",
+          isOpen: false,
+        },
+        {
+          title: "Draw That Flag - Draw the flag of the country.",
+          icon: "paint-brush",
+          description:
+            "Your task is to create a near-perfect replica of the given country's flag.",
+          isOpen: false,
+        },
+      ],
     };
   },
 
   methods: {
-    toggleList(list) {
-      if (list === 1) {
-        if (this.listIcon1 === "chevron-down") {
-          this.listIcon1 = "chevron-up";
-        } else {
-          this.listIcon1 = "chevron-down";
-        }
-      } else if (list === 2) {
-        if (this.listIcon2 === "chevron-down") {
-          this.listIcon2 = "chevron-up";
-        } else {
-          this.listIcon2 = "chevron-down";
-        }
-      } else if (list === 3) {
-        if (this.listIcon3 === "chevron-down") {
-          this.listIcon3 = "chevron-up";
-        } else {
-          this.listIcon3 = "chevron-down";
-        }
-      }
+    toggleList(index) {
+      this.lists[index].isOpen = !this.lists[index].isOpen;
     },
   },
 };
@@ -138,7 +97,7 @@ export default {
   z-index: 1;
 }
 
-.about .main-div {
+.about-main-div {
   background-color: #20202071;
   border-radius: 30px;
   box-shadow: 0px 0px 200px 0px #a3ffb3;
@@ -202,5 +161,31 @@ export default {
   font-size: 0.8rem;
   color: #a3ffb3;
   filter: drop-shadow(0 0 5px #a3ffb3);
+}
+
+.slide-enter-active {
+  animation: slide-in 0.5s ease-out forwards;
+}
+
+.slide-leave-active {
+  animation: slide-out 0.5s ease-out forwards;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(-80%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-out {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-80%);
+  }
 }
 </style>

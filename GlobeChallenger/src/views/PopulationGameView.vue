@@ -1,6 +1,6 @@
 <template>
   <div class="population-game">
-    <div class="main-div">
+    <div class="population-main-div">
       <div class="header">
         <h1 id="game-header">
           Does <span id="country-two-span">{{ countryTwo.name }}</span> have
@@ -200,7 +200,7 @@ export default {
   z-index: 1;
 }
 
-.main-div {
+.population-main-div {
   background-color: #20202071;
   border-radius: 30px;
   box-shadow: 0px 0px 200px 0px #a3ffb3;

@@ -144,6 +144,8 @@ export default {
       this.isDrawing = false;
       this.flag = this.canvas.toDataURL();
       this.flagDescription = false;
+      this.undoneActions = [];
+      this.canvasStates = [];
     },
 
     updateBrushColor() {

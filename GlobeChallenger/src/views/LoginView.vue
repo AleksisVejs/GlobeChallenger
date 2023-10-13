@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <div class="main-div">
+    <div class="login-main-div">
       <div class="login-header">
         <h1>Login</h1>
       </div>
@@ -107,6 +107,19 @@ export default {
   z-index: 1;
 }
 
+.login-main-div {
+  background-color: #20202071;
+  border-radius: 30px;
+  box-shadow: 0px 0px 200px 0px #a3ffb3;
+  padding: 60px;
+  border-style: solid;
+  border-color: #1b1b1b;
+  border: 6px solid #a3ffb3;
+  text-align: center;
+  padding-right: 90px;
+  padding-left: 90px;
+}
+
 .login-header {
   display: flex;
   flex-direction: column;
@@ -119,19 +132,6 @@ export default {
   text-shadow: 0 0 12px #a3ffb3;
   margin-bottom: 30px;
   margin-top: 0;
-}
-
-.main-div {
-  background-color: #20202071;
-  border-radius: 30px;
-  box-shadow: 0px 0px 200px 0px #a3ffb3;
-  padding: 60px;
-  border-style: solid;
-  border-color: #1b1b1b;
-  border: 6px solid #a3ffb3;
-  text-align: center;
-  padding-right: 90px;
-  padding-left: 90px;
 }
 
 .login-form {

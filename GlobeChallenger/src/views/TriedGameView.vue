@@ -1,6 +1,6 @@
 <template>
   <div class="tried-game">
-    <div class="main-div">
+    <div class="tried-main-div">
       <h1 id="tried-game-text">You Tried!</h1>
       <p id="previous-country" v-if="$route.query.previousCountry != null">
         The previous country was {{ $route.query.previousCountry }}
@@ -34,7 +34,8 @@ export default {
   margin: 0;
   z-index: 1;
 }
-.main-div {
+
+.tried-main-div {
   background-color: #20202071;
   border-radius: 30px;
   box-shadow: 0px 0px 200px 0px #e5ff00;

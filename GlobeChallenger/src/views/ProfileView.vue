@@ -1,6 +1,6 @@
 <template>
   <div class="profile">
-    <div class="main-div">
+    <div class="profile-main-div">
       <div class="profile-header">
         <div class="left-section">
           <div class="profile-picture">
@@ -21,66 +21,74 @@
         <div class="game-stat">
           <div class="game-stat-title">
             <h3>
-              <font-awesome-icon :icon="['fas', 'flag']" size="sm" />
+              <font-awesome-icon
+                class="profile-icon"
+                :icon="['fas', 'flag']"
+                size="sm"
+              />
               Flag Game
               <font-awesome-icon
                 class="icon-game-list"
-                id="icon-flag-game-list"
-                @click="toggleFlagGameList"
-                :icon="['fas', iconFlagGameList]"
+                @click="toggleList('flag')"
+                :icon="['fas', iconList('flag')]"
                 size="sm"
               />
             </h3>
-            <ul
-              v-if="user && iconFlagGameList === 'chevron-up'"
-              class="game-stat-list"
-            >
-              <li>
-                All: {{ user.flagGameScore ? user.flagGameScore.All : "" }}
-              </li>
-              <li>
-                Africa:
-                {{ user.flagGameScore ? user.flagGameScore.Africa : "" }}
-              </li>
-              <li>
-                Americas:
-                {{ user.flagGameScore ? user.flagGameScore.Americas : "" }}
-              </li>
-              <li>
-                Asia: {{ user.flagGameScore ? user.flagGameScore.Asia : "" }}
-              </li>
-              <li>
-                Europe:
-                {{ user.flagGameScore ? user.flagGameScore.Europe : "" }}
-              </li>
-              <li>
-                Oceania:
-                {{ user.flagGameScore ? user.flagGameScore.Oceania : "" }}
-              </li>
-              <li>Games played: {{ user.flagGamePlayed }}</li>
-            </ul>
+            <transition name="slide">
+              <ul
+                v-if="user && iconList('flag') === 'chevron-up'"
+                class="game-stat-list"
+              >
+                <li>
+                  All: {{ user.flagGameScore ? user.flagGameScore.All : "" }}
+                </li>
+                <li>
+                  Africa:
+                  {{ user.flagGameScore ? user.flagGameScore.Africa : "" }}
+                </li>
+                <li>
+                  Americas:
+                  {{ user.flagGameScore ? user.flagGameScore.Americas : "" }}
+                </li>
+                <li>
+                  Asia: {{ user.flagGameScore ? user.flagGameScore.Asia : "" }}
+                </li>
+                <li>
+                  Europe:
+                  {{ user.flagGameScore ? user.flagGameScore.Europe : "" }}
+                </li>
+                <li>
+                  Oceania:
+                  {{ user.flagGameScore ? user.flagGameScore.Oceania : "" }}
+                </li>
+              </ul>
+            </transition>
           </div>
         </div>
         <div class="game-stat">
           <div class="game-stat-title">
             <h3>
-              <font-awesome-icon :icon="['fas', 'users']" size="sm" />
+              <font-awesome-icon
+                class="profile-icon"
+                :icon="['fas', 'users']"
+                size="sm"
+              />
               Population Game
               <font-awesome-icon
                 class="icon-game-list"
-                id="icon-population-game-list"
-                @click="togglePopulationGameList"
-                :icon="['fas', iconPopulationGameList]"
+                @click="toggleList('population')"
+                :icon="['fas', iconList('population')]"
                 size="sm"
               />
             </h3>
-            <ul
-              v-if="user && iconPopulationGameList === 'chevron-up'"
-              class="game-stat-list"
-            >
-              <li>Best Score: {{ user.populationGameScore }}</li>
-              <li>Games Played: {{ user.populationGamePlayed }}</li>
-            </ul>
+            <transition name="slide">
+              <ul
+                v-if="user && iconList('population') === 'chevron-up'"
+                class="game-stat-list"
+              >
+                <li>Best Score: {{ user.populationGameScore }}</li>
+              </ul>
+            </transition>
           </div>
         </div>
       </div>
@@ -92,8 +100,10 @@
 export default {
   data() {
     return {
-      iconFlagGameList: "chevron-down",
-      iconPopulationGameList: "chevron-down",
+      list: {
+        flag: false,
+        population: false,
+      },
     };
   },
   computed: {
@@ -107,20 +117,12 @@ export default {
   },
 
   methods: {
-    toggleFlagGameList() {
-      if (this.iconFlagGameList === "chevron-down") {
-        this.iconFlagGameList = "chevron-up";
-      } else {
-        this.iconFlagGameList = "chevron-down";
-      }
+    toggleList(game) {
+      this.list[game] = !this.list[game];
     },
 
-    togglePopulationGameList() {
-      if (this.iconPopulationGameList === "chevron-down") {
-        this.iconPopulationGameList = "chevron-up";
-      } else {
-        this.iconPopulationGameList = "chevron-down";
-      }
+    iconList(game) {
+      return this.list[game] ? "chevron-up" : "chevron-down";
     },
   },
 };
@@ -139,7 +141,7 @@ export default {
   z-index: 1;
 }
 
-.main-div {
+.profile-main-div {
   background-color: #20202071;
   border-radius: 30px;
   box-shadow: 0px 0px 200px 0px #a3ffb3;
@@ -268,5 +270,37 @@ export default {
 .game-stat-list li span {
   color: #ffffff;
   margin-right: 5px;
+}
+
+.profile-icon {
+  color: #a3ffb3;
+  filter: drop-shadow(0 0 5px #a3ffb3);
+  margin-right: 10px;
+}
+
+.slide-enter-active {
+  animation: slide-in 0.5s ease-out forwards;
+}
+
+.slide-leave-active {
+  animation: slide-out 0.2s ease-out forwards;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(-5%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-out {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-5%);
+  }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="won-game">
-    <div class="main-div">
+    <div class="won-main-div">
       <h1 id="won-game-text">You Won</h1>
       <p id="final-score">Final Score: {{ $route.query.points }}</p>
       <button id="play-again-button" @click="playAgain">Play Again</button>
@@ -31,7 +31,8 @@ export default {
   margin: 0;
   z-index: 1;
 }
-.main-div {
+
+.won-main-div {
   background-color: #20202071;
   border-radius: 30px;
   box-shadow: 0px 0px 200px 0px #48ff00;

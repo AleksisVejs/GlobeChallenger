@@ -1,6 +1,6 @@
 <template>
   <div class="flag-game">
-    <div class="main-div">
+    <div class="flag-main-div">
       <div class="select-div">
         <label for="region"
           ><font-awesome-icon class="icon" icon="globe"
@@ -229,7 +229,7 @@ export default {
   z-index: 1;
 }
 
-.main-div {
+.flag-main-div {
   background-color: #20202071;
   border-radius: 30px;
   box-shadow: 0px 0px 200px 0px #a3ffb3;

@@ -1,6 +1,6 @@
 <template>
   <div class="register">
-    <div class="main-div">
+    <div class="register-main-div">
       <div class="register-header">
         <h1>Register</h1>
         <h2>Create an account</h2>
@@ -89,8 +89,6 @@ export default {
         Oceania: 0,
       },
       populationGameScore: 0,
-      flagGamePlayed: 0,
-      populationGamePlayed: 0,
     };
   },
   methods: {
@@ -102,8 +100,6 @@ export default {
         createdAt: new Date().toLocaleDateString(),
         flagGameScore: this.flagGameScore,
         populationGameScore: this.populationGameScore,
-        flagGamePlayed: this.flagGamePlayed,
-        populationGamePlayed: this.populationGamePlayed,
       };
 
       const existingUserData = require("../users.json");
@@ -156,6 +152,17 @@ export default {
   z-index: 1;
 }
 
+.register-main-div {
+  background-color: #20202071;
+  border-radius: 30px;
+  box-shadow: 0px 0px 200px 0px #a3ffb3;
+  padding: 30px 150px 40px 150px;
+  border-style: solid;
+  border-color: #1b1b1b;
+  border: 6px solid #a3ffb3;
+  text-align: center;
+}
+
 .register-header {
   display: flex;
   flex-direction: column;
@@ -175,17 +182,6 @@ export default {
   font-weight: 100;
   margin-bottom: 25px;
   margin-top: 0;
-}
-
-.main-div {
-  background-color: #20202071;
-  border-radius: 30px;
-  box-shadow: 0px 0px 200px 0px #a3ffb3;
-  padding: 30px 150px 40px 150px;
-  border-style: solid;
-  border-color: #1b1b1b;
-  border: 6px solid #a3ffb3;
-  text-align: center;
 }
 
 .login-form {

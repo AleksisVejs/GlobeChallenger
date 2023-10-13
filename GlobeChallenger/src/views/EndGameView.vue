@@ -1,6 +1,6 @@
 <template>
   <div class="end-game">
-    <div class="main-div">
+    <div class="end-game-main-div">
       <h1 id="end-game-text">You Lost</h1>
       <p id="previous-country">
         The previous country was {{ $route.query.previousCountry }}
@@ -34,7 +34,7 @@ export default {
   margin: 0;
   z-index: 1;
 }
-.main-div {
+.end-game-main-div {
   background-color: #20202071;
   border-radius: 30px;
   box-shadow: 0px 0px 200px 0px #ff0000;
