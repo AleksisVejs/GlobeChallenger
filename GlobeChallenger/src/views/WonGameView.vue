@@ -3,6 +3,11 @@
     <div class="won-main-div">
       <h1 id="won-game-text">You Won</h1>
       <p id="final-score">Final Score: {{ $route.query.points }}</p>
+      <p id="game-info">
+        Game difficulty: {{ $route.query.difficulty }}
+        <br />
+        Region: {{ $route.query.region }}
+      </p>
       <button id="play-again-button" @click="playAgain">Play Again</button>
     </div>
   </div>
@@ -52,10 +57,16 @@ export default {
 
 #final-score {
   font-size: 1.5rem;
+  margin: 20px;
 }
 
 #play-again-button {
   width: 100px;
   margin: 0;
+}
+
+#game-info {
+  font-size: 1.1rem;
+  margin: 20px;
 }
 </style>

@@ -137,12 +137,24 @@ export default {
         if (this.hasSkipButtonBeenClicked === false) {
           this.$router.push({
             name: "won-game",
-            query: { points: this.points },
+            query: {
+              points: this.points,
+              difficulty: this.selectedMode,
+              region: this.selectedRegion,
+            },
           });
         } else {
           this.$router.push({
             name: "tried-game",
-            query: { points: this.points, previousCountry: this.countryName },
+            query: {
+              points: this.points,
+              difficulty:
+                this.selectedMode.charAt(0).toUpperCase() +
+                this.selectedMode.slice(1),
+              region:
+                this.selectedRegion.charAt(0).toUpperCase() +
+                this.selectedRegion.slice(1),
+            },
           });
         }
       }
