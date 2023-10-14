@@ -7,12 +7,17 @@
         </h1>
       </div>
       <div class="canvas-container">
-        <canvas id="cursor" ref="cursor" width="500" height="300"></canvas>
+        <canvas
+          id="cursor"
+          ref="cursor"
+          :width="canvasWidth"
+          :height="canvasHeight"
+        ></canvas>
         <canvas
           id="canvas"
           ref="canvas"
-          width="500"
-          height="300"
+          :width="canvasWidth"
+          :height="canvasHeight"
           style="
             border: 1px solid #a3ffb3;
             box-shadow: 0px 0px 10px 0px #a3ffb3;
@@ -91,6 +96,8 @@ export default {
       isDrawing: true,
       brushSize: 10,
       brushColor: "#ffffff",
+      canvasWidth: 500,
+      canvasHeight: 300,
       undoneActions: [],
       canvasStates: [],
       mousecursor: new fabric.Circle({

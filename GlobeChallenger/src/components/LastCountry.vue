@@ -39,4 +39,23 @@ export default {
 #last-country-name {
   font-size: 1.5rem;
 }
+
+@media (max-width: 768px) {
+  .last-country {
+    top: 90%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    width: 200px;
+    height: auto;
+    padding: 5px;
+  }
+
+  #last-country-text {
+    font-size: 1rem;
+  }
+
+  #last-country-name {
+    font-size: 0.8rem;
+  }
+}
 </style>

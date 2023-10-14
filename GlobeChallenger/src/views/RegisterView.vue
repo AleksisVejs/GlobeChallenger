@@ -232,4 +232,10 @@ export default {
   margin-bottom: 5px;
   margin-top: 20px;
 }
+
+@media (max-width: 768px) {
+  .register-main-div {
+    padding: 30px 50px 40px 50px;
+  }
+}
 </style>

@@ -188,4 +188,29 @@ export default {
     transform: translateY(-80%);
   }
 }
+
+@media (max-width: 768px) {
+  .about-main-div {
+    padding: 10px;
+    margin: 20px;
+  }
+
+  .about-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .about-list {
+    margin: 5px;
+    padding: 5px;
+    padding-left: 10px;
+  }
+
+  .about-list ul {
+    margin: 5px;
+  }
+
+  #creator {
+    font-size: 0.6rem;
+  }
+}
 </style>

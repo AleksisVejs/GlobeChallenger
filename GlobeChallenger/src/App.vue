@@ -69,4 +69,11 @@ button:hover {
   box-shadow: 0px 0px 20px 0px #a3ffb3;
   cursor: pointer;
 }
+
+@media (max-width: 768px) {
+  #world-video {
+    width: auto;
+    height: auto;
+  }
+}
 </style>

@@ -148,12 +148,8 @@ export default {
             name: "tried-game",
             query: {
               points: this.points,
-              difficulty:
-                this.selectedMode.charAt(0).toUpperCase() +
-                this.selectedMode.slice(1),
-              region:
-                this.selectedRegion.charAt(0).toUpperCase() +
-                this.selectedRegion.slice(1),
+              difficulty: this.selectedMode,
+              region: this.selectedRegion,
             },
           });
         }
@@ -352,5 +348,65 @@ input:focus {
   color: #ffffff;
   filter: drop-shadow(0 0 3px #ffffff);
   transition: all 0.3s;
+}
+
+@media (max-width: 768px) {
+  .flag-main-div {
+    padding: 15px 30px 15px 30px;
+  }
+
+  #flag {
+    width: 250px;
+    height: 150px;
+  }
+
+  #answerSubmit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+  }
+
+  input {
+    width: 200px;
+    background-color: transparent;
+    color: rgb(255, 255, 255);
+    border: 1px solid rgb(255, 255, 255);
+    box-shadow: 0px 0px 7px #fff;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+  }
+
+  input:focus {
+    border: 1px solid #a3ffb3;
+    background-color: #a3ffb3;
+    color: #1b1b1b;
+    box-shadow: 0px 0px 20px 0px #a3ffb3;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+
+  #skip-button {
+    width: 100px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    transition: all 0.3s ease;
+  }
+
+  #skip-button:disabled {
+    filter: blur(2px);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  #x-image {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    height: 200px;
+  }
 }
 </style>

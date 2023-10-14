@@ -64,4 +64,12 @@ export default {
   width: 100px;
   margin: 0;
 }
+
+@media (max-width: 768px) {
+  .end-game-main-div {
+    padding: 50px;
+    padding-top: 25px;
+    width: 250px;
+  }
+}
 </style>

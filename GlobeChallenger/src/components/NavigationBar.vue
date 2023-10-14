@@ -73,7 +73,7 @@ nav {
 }
 
 .header {
-  flex-grow: 1; /* Take up remaining space */
+  flex-grow: 1;
   text-align: center;
 }
 
@@ -128,5 +128,53 @@ nav a:hover {
   border: none;
   cursor: pointer;
   box-shadow: none;
+}
+
+@media (max-width: 768px) {
+  .nav {
+    flex-direction: column;
+  }
+
+  .left-links,
+  .right-links {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .left-links {
+    order: 2;
+  }
+
+  .right-links {
+    order: 3;
+  }
+
+  .header {
+    order: 1;
+    text-align: center;
+  }
+
+  .header h1 {
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+
+  nav a {
+    padding: 0.2rem;
+    font-size: 1rem;
+  }
+
+  nav a.router-link-exact-active {
+    font-size: 1rem;
+  }
+
+  .logout-button {
+    padding: 0.2rem;
+    font-size: 1rem;
+  }
+
+  .logout-button:hover {
+    font-size: 1rem;
+  }
 }
 </style>

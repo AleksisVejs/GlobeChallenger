@@ -243,4 +243,12 @@ export default {
   margin-bottom: 5px;
   margin-top: 20px;
 }
+
+@media (max-width: 768px) {
+  .login-main-div {
+    padding: 30px;
+    margin-top: 30px;
+    width: 250px;
+  }
+}
 </style>

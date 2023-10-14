@@ -179,4 +179,22 @@ export default {
     transform: translateY(1%);
   }
 }
+
+@media (max-width: 768px) {
+  #game-modes {
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    overflow-y: scroll;
+    margin-top: 110px;
+    height: calc(100vh - 110px);
+  }
+
+  .game-mode-buttons {
+    height: 200px;
+    width: 300px;
+    padding: 10px;
+    margin: 10px;
+  }
+}
 </style>

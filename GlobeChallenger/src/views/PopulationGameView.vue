@@ -296,4 +296,67 @@ export default {
   color: #a3ffb3;
   text-shadow: 0 0 7px #a3ffb3;
 }
+
+@media (max-width: 768px) {
+  .population-main-div {
+    padding: 10px;
+    height: 500px;
+    width: 300px;
+    margin-top: 85px;
+  }
+
+  .countries-container {
+    flex-direction: column;
+  }
+
+  .country {
+    width: 200px;
+    height: 150px;
+    padding: 10px;
+    margin: 10px;
+  }
+
+  .country img {
+    max-width: 150px;
+    max-height: 70px;
+  }
+
+  #population {
+    margin-top: 20px;
+    font-size: 0.8rem;
+  }
+
+  #button-guess {
+    width: 80px;
+    margin-top: 10px;
+    font-size: 0.7rem;
+  }
+
+  #points-text {
+    margin-top: 20px;
+    font-size: 1rem;
+  }
+
+  #game-header {
+    font-size: 0.8rem;
+    margin: 0;
+  }
+
+  #country-one-span {
+    font-size: 0.8rem;
+  }
+
+  #country-two-span {
+    font-size: 0.8rem;
+  }
+
+  .country h2 {
+    font-size: 0.9rem;
+  }
+
+  .button-div {
+    width: 100%;
+    margin: 0;
+  }
+}
 </style>

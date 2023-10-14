@@ -303,4 +303,33 @@ export default {
     transform: translateY(-5%);
   }
 }
+
+@media (max-width: 768px) {
+  .profile-main-div {
+    padding: 30px 50px 40px 50px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .game-stats {
+    margin-left: 0;
+    margin-top: 30px;
+  }
+
+  .game-stat-title h3 {
+    font-size: 1rem;
+  }
+
+  .game-stat-list li {
+    font-size: 0.8rem;
+  }
+
+  .edit-profile {
+    margin: 0;
+  }
+
+  .user-info {
+    margin: 0;
+  }
+}
 </style>
