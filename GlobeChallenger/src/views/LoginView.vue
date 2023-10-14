@@ -7,39 +7,18 @@
       <div class="login-form">
         <form @submit.prevent="login">
           <div class="form-group">
-            <label for="username">
-              <font-awesome-icon
-                :icon="['fas', 'user']"
-                size="sm"
-                style="color: #a3ffb3; filter: drop-shadow(0 0 5px #a3ffb3)"
-              />
-              Username
-            </label>
             <input
               type="text"
               id="username"
-              placeholder="Username"
               v-model="username"
               required
               autofocus
             />
+            <label for="username">Username</label>
           </div>
           <div class="form-group">
-            <label for="password">
-              <font-awesome-icon
-                :icon="['fas', 'key']"
-                size="sm"
-                style="color: #a3ffb3; filter: drop-shadow(0 0 5px #a3ffb3)"
-              />
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              placeholder="Password"
-              v-model="password"
-              required
-            />
+            <input type="password" id="password" v-model="password" required />
+            <label for="password"> Password</label>
           </div>
           <div id="inputPreview">
             <input
@@ -142,32 +121,27 @@ export default {
 
 .form-group {
   display: flex;
+  position: relative;
   flex-direction: column;
   align-items: center;
   margin-bottom: 10px;
 }
 
 .form-group label {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 0.9rem;
   color: #ffffff;
   text-shadow: 0 0 9px #ffffff;
-  font-size: 1rem;
-  text-align: left;
-  width: 210px;
+  pointer-events: none;
+  transform: translateY(0);
+  transition: transform 0.2s, font-size 0.2s, color 0.2s;
 }
 
 .form-group input {
   width: 200px;
-  background-color: transparent;
-  color: rgb(255, 255, 255);
-  border: 1px solid rgb(255, 255, 255);
-  box-shadow: 0px 0px 7px #fff;
-  border-radius: 5px;
-  padding: 5px;
-  margin: 5px;
-}
-
-.login-form input {
-  width: 200px;
+  height: 25px;
   background-color: transparent;
   color: rgb(255, 255, 255);
   border: 1px solid rgb(255, 255, 255);
@@ -175,16 +149,16 @@ export default {
   border-radius: 5px;
   padding: 5px;
   margin: 10px;
-  height: 25px;
 }
 
-.login-form input:focus {
-  border: 1px solid #a3ffb3;
-  background-color: #a3ffb3;
-  color: #1b1b1b;
-  box-shadow: 0px 0px 20px 0px #a3ffb3;
-  outline: none;
-  transition: all 0.3s ease;
+.form-group input:focus + label,
+.form-group input:valid + label {
+  top: 0;
+  left: 10px;
+  font-size: 0.7rem;
+  color: #a3ffb3;
+  text-shadow: 0 0 9px #a3ffb3;
+  transform: translateY(-80%);
 }
 
 .login-form button {
@@ -192,6 +166,7 @@ export default {
   margin-top: 20px;
   height: 40px;
 }
+
 .css-checkbox {
   position: absolute;
   z-index: -1000;
@@ -204,11 +179,13 @@ export default {
   padding: 0;
   border: 0;
 }
+
 #inputPreview {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .css-checkbox + label {
   position: relative;
   font-size: 14px;
@@ -234,7 +211,7 @@ export default {
 }
 
 .css-checkbox:checked + label:before {
-  content: "\2713"; /* Checkmark symbol */
+  content: "\2713";
   display: inline-block;
   vertical-align: -25%;
   height: 20px;
@@ -243,10 +220,6 @@ export default {
   border-radius: 3px;
   margin-right: 10px;
   box-shadow: 0 0 5px #a3ffb2;
-}
-
-.icon-glow {
-  text-shadow: 0 0 5px rgba(150, 208, 160, 0.8);
 }
 
 .route-to-register {

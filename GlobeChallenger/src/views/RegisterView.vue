@@ -8,58 +8,28 @@
       <div class="register-form">
         <form>
           <div class="form-group">
-            <label for="email">
-              <font-awesome-icon
-                :icon="['fas', 'envelope']"
-                size="sm"
-                style="color: #a3ffb3; filter: drop-shadow(0 0 5px #a3ffb3)"
-              />
-              E-mail
-            </label>
-            <input
-              type="email"
-              id="email"
-              placeholder="E-mail"
-              v-model="email"
-              required
-              autofocus
-            />
+            <input type="email" id="email" v-model="email" required autofocus />
+            <label :class="{ 'label-moved': email }" for="email">E-mail</label>
           </div>
           <div class="form-group">
-            <label for="username">
-              <font-awesome-icon
-                :icon="['fas', 'user']"
-                size="sm"
-                style="color: #a3ffb3; filter: drop-shadow(0 0 5px #a3ffb3)"
-              />
-              Username
-            </label>
             <input
               type="text"
               id="username"
-              placeholder="Username"
               v-model="username"
               required
               autocomplete="off"
             />
+            <label for="username">Username</label>
           </div>
           <div class="form-group">
-            <label for="password">
-              <font-awesome-icon
-                :icon="['fas', 'key']"
-                size="sm"
-                style="color: #a3ffb3; filter: drop-shadow(0 0 5px #a3ffb3)"
-              />
-              Password
-            </label>
             <input
               type="password"
               id="password"
-              placeholder="Password"
               v-model="password"
               required
               autocomplete="off"
             />
+            <label for="password">Password</label>
           </div>
           <button type="submit" @click.prevent="register">Register</button>
         </form>
@@ -184,39 +154,36 @@ export default {
   margin-top: 0;
 }
 
-.login-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .form-group {
   display: flex;
+  position: relative;
   flex-direction: column;
   align-items: center;
   margin-bottom: 10px;
 }
 
 .form-group label {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 0.9rem;
   color: #ffffff;
   text-shadow: 0 0 9px #ffffff;
-  font-size: 1rem;
-  text-align: left;
-  width: 210px;
+  pointer-events: none;
+  transform: translateY(0);
+  transition: transform 0.2s, font-size 0.2s, color 0.2s;
+}
+
+.form-group .label-moved {
+  top: 0px;
+  left: 10px;
+  font-size: 0.7rem;
+  color: #a3ffb3;
+  text-shadow: 0 0 9px #a3ffb3;
+  transform: translateY(-80%);
 }
 
 .form-group input {
-  width: 200px;
-  background-color: transparent;
-  color: rgb(255, 255, 255);
-  border: 1px solid rgb(255, 255, 255);
-  box-shadow: 0px 0px 7px #fff;
-  border-radius: 5px;
-  padding: 5px;
-  margin: 5px;
-}
-
-.register-form input {
   width: 200px;
   background-color: transparent;
   color: rgb(255, 255, 255);
@@ -228,41 +195,20 @@ export default {
   height: 25px;
 }
 
-.register-form input:focus {
-  border: 1px solid #a3ffb3;
-  background-color: #a3ffb3;
-  color: #1b1b1b;
-  box-shadow: 0px 0px 20px 0px #a3ffb3;
-  outline: none;
-  transition: all 0.3s ease;
+.form-group input:focus + label,
+.form-group input:valid + label {
+  top: 0;
+  left: 10px;
+  font-size: 0.7rem;
+  color: #a3ffb3;
+  text-shadow: 0 0 9px #a3ffb3;
+  transform: translateY(-80%);
 }
 
 .register-form button {
   width: 210px;
   margin-top: 15px;
   height: 40px;
-}
-
-.remember-me-group {
-  display: flex;
-  align-items: center;
-}
-
-#remember-me {
-  box-shadow: none;
-  padding: 0;
-  width: 20px;
-  height: 15px;
-}
-
-.remember-me-group label {
-  color: #ffffff;
-  text-shadow: 0 0 9px #ffffff;
-  font-size: 0.9rem;
-}
-
-.icon-glow {
-  text-shadow: 0 0 5px rgba(150, 208, 160, 0.8);
 }
 
 .route-to-login {
