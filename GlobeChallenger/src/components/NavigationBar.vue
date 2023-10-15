@@ -102,7 +102,7 @@ nav a.router-link-exact-active {
 nav a:hover {
   color: rgb(255, 255, 255);
   text-shadow: 0px 0px 3px #ffffff;
-  font-size: 1.5rem;
+  transform: scale(1.1);
 }
 
 .logout-button {
@@ -123,7 +123,7 @@ nav a:hover {
 .logout-button:hover {
   color: rgb(255, 255, 255);
   text-shadow: 0px 0px 3px #ffffff;
-  font-size: 1.5rem;
+  transform: scale(1.1);
   background-color: transparent;
   border: none;
   cursor: pointer;
@@ -161,6 +161,10 @@ nav a:hover {
 
   nav a {
     padding: 0.2rem;
+    font-size: 1rem;
+  }
+
+  nav a:hover {
     font-size: 1rem;
   }
 

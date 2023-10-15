@@ -6,7 +6,7 @@
         <h2>Create an account</h2>
       </div>
       <div class="register-form">
-        <form>
+        <form @submit.prevent="register">
           <div class="form-group">
             <input type="email" id="email" v-model="email" required autofocus />
             <label :class="{ 'label-moved': email }" for="email">E-mail</label>
@@ -38,7 +38,7 @@
               @click="togglePasswordVisibility"
             />
           </div>
-          <button type="submit" @click.prevent="register">Register</button>
+          <button type="submit">Register</button>
         </form>
         <p class="route-to-login-text">Already an existing user?</p>
         <router-link to="/login" class="route-to-login">
@@ -83,17 +83,16 @@ export default {
 
       const existingUserData = require("../users.json");
 
-      const emailExists = existingUserData.some(
-        (user) => user.email === newUser.email
-      );
-      const usernameExists = existingUserData.some(
+      // Check if username already exists
+      const existingUser = existingUserData.find(
         (user) => user.username === newUser.username
       );
+      const existingEmail = existingUserData.find(
+        (user) => user.email === newUser.email
+      );
 
-      if (emailExists || usernameExists) {
-        alert(
-          "Email or username already exists. Please choose a different one."
-        );
+      if (existingUser || existingEmail) {
+        alert("User already exists with this username or email");
         return;
       }
 
