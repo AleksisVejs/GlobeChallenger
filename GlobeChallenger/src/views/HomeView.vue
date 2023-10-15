@@ -119,7 +119,7 @@ export default {
 .game-mode-buttons {
   background-color: #20202071;
   border-radius: 30px;
-  box-shadow: 0px 0px 100px 0px #a3ffb3;
+  box-shadow: 0px 0px 90px 0px #a3ffb3;
   padding: 60px;
   margin: 20px;
   border-style: solid;
@@ -134,7 +134,7 @@ export default {
 .game-mode-buttons:hover {
   background-color: #a3ffb3;
   color: #1b1b1b;
-  box-shadow: 0px 0px 20px 0px #a3ffb3;
+  box-shadow: 0px 0px 10px 0px #a3ffb3;
   cursor: pointer;
   transition: all 0.5s;
   animation-play-state: paused;

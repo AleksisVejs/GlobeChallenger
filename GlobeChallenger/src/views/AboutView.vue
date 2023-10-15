@@ -100,7 +100,7 @@ export default {
 .about-main-div {
   background-color: #20202071;
   border-radius: 30px;
-  box-shadow: 0px 0px 200px 0px #a3ffb3;
+  box-shadow: 0px 0px 100px 0px #a3ffb3;
   padding: 50px;
   padding-top: 25px;
   border-style: solid;
