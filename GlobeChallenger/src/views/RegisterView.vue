@@ -10,6 +10,7 @@
           <div class="form-group">
             <input type="email" id="email" v-model="email" required autofocus />
             <label :class="{ 'label-moved': email }" for="email">E-mail</label>
+            <font-awesome-icon :icon="['fas', 'envelope']" class="form-icon" />
           </div>
           <div class="form-group">
             <input
@@ -20,16 +21,22 @@
               autocomplete="off"
             />
             <label for="username">Username</label>
+            <font-awesome-icon :icon="['fas', 'user']" class="form-icon" />
           </div>
           <div class="form-group">
             <input
-              type="password"
               id="password"
               v-model="password"
               required
-              autocomplete="off"
+              :type="showPassword ? 'text' : 'password'"
             />
             <label for="password">Password</label>
+            <font-awesome-icon
+              :icon="iconClass"
+              class="form-icon"
+              id="password-icon"
+              @click="togglePasswordVisibility"
+            />
           </div>
           <button type="submit" @click.prevent="register">Register</button>
         </form>
@@ -50,6 +57,8 @@ export default {
       username: "",
       password: "",
       createdAt: "",
+      showPassword: false,
+      iconClass: "fas fa-eye",
       flagGameScore: {
         All: 0,
         Europe: 0,
@@ -104,6 +113,11 @@ export default {
 
       alert("Registration successful");
       this.$router.push("/");
+    },
+
+    togglePasswordVisibility() {
+      this.showPassword = !this.showPassword;
+      this.iconClass = this.showPassword ? "fas fa-eye-slash" : "fas fa-eye";
     },
   },
 };
@@ -231,6 +245,26 @@ export default {
   font-size: 0.9rem;
   margin-bottom: 5px;
   margin-top: 20px;
+}
+
+.form-icon {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  color: #a3ffb3;
+  filter: drop-shadow(0 0 3px #a3ffb3);
+  transition: all 0.3s ease;
+}
+
+#password-icon:hover {
+  color: #ffffff;
+  filter: drop-shadow(0 0 3px #000000);
+  cursor: pointer;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px #202020 inset !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 
 @media (max-width: 768px) {
