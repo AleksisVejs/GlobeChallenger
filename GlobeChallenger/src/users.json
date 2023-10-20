@@ -7,32 +7,5 @@
     "createdAt": "15/04/2021",
     "flagGameScore": {"All": 3, "Europe": 0, "Asia": 0, "Africa": 5, "Americas": 0, "Oceania": 0},
     "populationGameScore": 0
-  },
-  {
-    "id": 2,
-    "email": "example@gmail.com",
-    "username": "Monta",
-    "password": "montina",
-    "createdAt": "17/03/2023",
-    "flagGameScore": {"All": 0, "Europe": 0, "Asia": 0, "Africa": 0, "Americas": 0, "Oceania": 0},
-    "populationGameScore": 0
-  },
-  {
-    "id": 3,
-    "email": "example2@gmail.com",
-    "username": "aleksisvejs",
-    "password": "password",
-    "createdAt": "9/11/2021",
-    "flagGameScore": {"All": 999, "Europe": 999, "Asia": 999, "Africa": 999, "Americas": 999, "Oceania": 999},
-    "populationGameScore": 999
-  },
-  {
-    "id": 4,
-    "email": "example3@gmail.com",
-    "username": "123",
-    "password": "123",
-    "createdAt": "21/12/2022",
-    "flagGameScore": {"All": 9, "Europe": 9, "Asia": 9, "Africa": 9, "Americas": 9, "Oceania": 9},
-    "populationGameScore": 9
   }
 ]

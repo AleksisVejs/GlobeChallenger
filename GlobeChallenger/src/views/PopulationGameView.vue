@@ -226,7 +226,7 @@ export default {
 }
 
 .country {
-  width: 300px;
+  width: 350px;
   height: 300px;
   background-color: #a3ffb23f;
   display: flex;
