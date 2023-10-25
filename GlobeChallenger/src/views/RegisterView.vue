@@ -68,6 +68,7 @@ export default {
         Oceania: 0,
       },
       populationGameScore: 0,
+      capitalGameScore: 0,
     };
   },
   methods: {
@@ -79,6 +80,7 @@ export default {
         createdAt: new Date().toLocaleDateString(),
         flagGameScore: this.flagGameScore,
         populationGameScore: this.populationGameScore,
+        capitalGameScore: this.capitalGameScore,
       };
 
       const existingUserData = require("../users.json");

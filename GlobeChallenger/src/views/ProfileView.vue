@@ -91,6 +91,32 @@
             </transition>
           </div>
         </div>
+        <div class="game-stat">
+          <div class="game-stat-title">
+            <h3>
+              <font-awesome-icon
+                class="profile-icon"
+                :icon="['fas', 'city']"
+                size="sm"
+              />
+              Population Game
+              <font-awesome-icon
+                class="icon-game-list"
+                @click="toggleList('capital')"
+                :icon="['fas', iconList('capital')]"
+                size="sm"
+              />
+            </h3>
+            <transition name="slide">
+              <ul
+                v-if="user && iconList('capital') === 'chevron-up'"
+                class="game-stat-list"
+              >
+                <li>Best Score: {{ user.capitalGameScore }}</li>
+              </ul>
+            </transition>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -103,6 +129,7 @@ export default {
       list: {
         flag: false,
         population: false,
+        capital: false,
       },
     };
   },
@@ -168,9 +195,9 @@ export default {
 }
 
 .left-section h1 {
-  color: #a3ffb3;
+  color: #ffffff;
   font-size: 2rem;
-  text-shadow: 0 0 12px #a3ffb3;
+  text-shadow: 0 0 12px #ffffff;
 }
 
 .edit-profile {
@@ -214,9 +241,9 @@ export default {
 }
 
 .game-stats h2 {
-  color: #a3ffb3;
+  color: #ffffff;
   font-size: 1.5rem;
-  text-shadow: 0 0 9px #a3ffb286;
+  text-shadow: 0 0 9px #ffffff;
   margin: 0;
 }
 

@@ -6,6 +6,7 @@
     "password": "admin",
     "createdAt": "15/04/2021",
     "flagGameScore": {"All": 3, "Europe": 0, "Asia": 0, "Africa": 5, "Americas": 0, "Oceania": 0},
-    "populationGameScore": 0
+    "populationGameScore": 0,
+    "capitalGameScore": 0
   }
 ]

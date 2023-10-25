@@ -72,6 +72,13 @@ export default {
             "Your task is to create a near-perfect replica of the given country's flag.",
           isOpen: false,
         },
+        {
+          title: "Capital Game - Guess the capital city of the country.",
+          icon: "city",
+          description:
+            "You will be presented with a capital city and four countries. Your objective is to determine which country has the given capital city.",
+          isOpen: false,
+        },
       ],
     };
   },

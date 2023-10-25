@@ -46,11 +46,15 @@
       </button>
       <button
         class="game-mode-buttons"
+        @click="navigateToCapitalGame"
         :style="{ animationDuration: randomDuration() + 's' }"
       >
         <div class="button-content">
-          <font-awesome-icon :icon="['fas', 'gear']" size="2xl" class="icon" />
-          <div class="button-text">Work In Progress</div>
+          <font-awesome-icon :icon="['fas', 'city']" size="2xl" class="icon" />
+          <div class="button-text">Capital Game</div>
+          <span class="game-mode-desc">
+            Guess which countries capital is shown.
+          </span>
         </div>
       </button>
       <button
@@ -87,6 +91,9 @@ export default {
     },
     navigateToFlagDrawGame() {
       this.$router.push("/flagDrawGame");
+    },
+    navigateToCapitalGame() {
+      this.$router.push("/capitalGame");
     },
     randomDuration() {
       return (Math.random() * 1 + 2).toFixed(2); //
