@@ -1,7 +1,6 @@
 <template>
   <div class="capital-game">
     <div class="capital-main-div">
-      <img id="x-image" src="../assets/x.png" v-if="showXImage" />
       <div class="capital-header">
         <h1 id="game-header">
           What country has the capital city of
@@ -12,32 +11,32 @@
       <div class="country-choices">
         <div class="capital-country">
           <button
-            @click="checkAnswer(countryOne.capital)"
-            :disabled="showXImage"
+            :class="buttonClass[0]"
+            @click="checkAnswer(countryOne.capital, 0)"
           >
             <h2>{{ countryOne.name }}</h2>
           </button>
         </div>
         <div class="capital-country">
           <button
-            @click="checkAnswer(countryTwo.capital)"
-            :disabled="showXImage"
+            :class="buttonClass[1]"
+            @click="checkAnswer(countryTwo.capital, 1)"
           >
             <h2>{{ countryTwo.name }}</h2>
           </button>
         </div>
         <div class="capital-country">
           <button
-            @click="checkAnswer(countryThree.capital)"
-            :disabled="showXImage"
+            :class="buttonClass[2]"
+            @click="checkAnswer(countryThree.capital, 2)"
           >
             <h2>{{ countryThree.name }}</h2>
           </button>
         </div>
         <div class="capital-country">
           <button
-            @click="checkAnswer(countryFour.capital)"
-            :disabled="showXImage"
+            :class="buttonClass[3]"
+            @click="checkAnswer(countryFour.capital, 3)"
           >
             <h2>{{ countryFour.name }}</h2>
           </button>
@@ -61,7 +60,7 @@ export default {
       countryThree: { name: "", capital: "" },
       countryFour: { name: "", capital: "" },
       points: 0,
-      showXImage: false,
+      buttonClass: ["", "", "", ""],
     };
   },
   methods: {
@@ -121,18 +120,33 @@ export default {
       }
     },
 
-    checkAnswer(answer) {
+    checkAnswer(answer, index) {
       if (answer === this.capital) {
         this.points++;
-        this.fetchCountry();
       } else {
-        this.showXImage = true;
         this.points--;
-        this.fetchCountry();
-        setTimeout(() => {
-          this.showXImage = false;
-        }, 2000);
       }
+
+      let buttons = document.querySelectorAll("button");
+
+      if (answer === this.capital) {
+        buttons[index].classList.add("green-button");
+      } else {
+        buttons[index].classList.add("red-button");
+      }
+
+      buttons.forEach((button) => {
+        button.disabled = true;
+      });
+
+      setTimeout(() => {
+        buttons.forEach((button) => {
+          button.classList.remove("green-button");
+          button.classList.remove("red-button");
+          button.disabled = false;
+        });
+        this.fetchCountry();
+      }, 1500);
     },
   },
   mounted() {
@@ -212,13 +226,20 @@ export default {
   min-height: 30px;
 }
 
-#x-image {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
-  width: 400px;
-  height: 400px;
+.red-button,
+.red-button:hover {
+  color: #ffffff;
+  background-color: #ff2a2a;
+  box-shadow: 0px 0px 10px 0px #ff2a2a;
+  border: 1px solid #ff2a2a;
+}
+
+.green-button,
+.green-button:hover {
+  color: #ffffff;
+  background-color: #00ff00;
+  box-shadow: 0px 0px 10px 0px #00ff00;
+  border: 1px solid #00ff00;
 }
 
 @media (max-width: 768px) {
