@@ -121,32 +121,31 @@ export default {
     },
 
     checkAnswer(answer, index) {
-      if (answer === this.capital) {
-        this.points++;
-      } else {
-        this.points--;
-      }
-
       let buttons = document.querySelectorAll("button");
-
-      if (answer === this.capital) {
-        buttons[index].classList.add("green-button");
-      } else {
-        buttons[index].classList.add("red-button");
-      }
 
       buttons.forEach((button) => {
         button.disabled = true;
       });
-
+      if (answer === this.capital) {
+        this.points++;
+        this.buttonClass = ["", "", "", ""];
+        this.buttonClass[index] = "green-button";
+      } else {
+        this.points--;
+        this.buttonClass = ["", "", "", ""];
+        this.buttonClass[index] = "red-button";
+      }
       setTimeout(() => {
+        this.buttonClass = ["", "", "", ""];
+        this.fetchCountry();
         buttons.forEach((button) => {
-          button.classList.remove("green-button");
-          button.classList.remove("red-button");
           button.disabled = false;
         });
-        this.fetchCountry();
-      }, 1500);
+      }, 1000);
+
+      if (this.points < 0) {
+        this.$router.push({ name: "game-over" });
+      }
     },
   },
   mounted() {

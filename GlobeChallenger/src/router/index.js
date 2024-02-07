@@ -67,6 +67,11 @@ const routes = [
     name: "capital-game",
     component: () => import("../views/CapitalGameView.vue"),
   },
+  {
+    path: "/gameOver",
+    name: "game-over",
+    component: () => import("../views/GameOverView.vue"),
+  }
 ];
 
 const router = createRouter({
