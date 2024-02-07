@@ -47,6 +47,7 @@ export default {
   color: #a3ffb3;
   font-size: 2rem;
   text-shadow: 0 0 9px #a3ffb3;
+  margin: 20px;
 }
 
 #final-score {
@@ -56,5 +57,6 @@ export default {
 #play-again-button {
   width: 150px;
   height: 40px;
+  margin-top: 10px;
 }
 </style>

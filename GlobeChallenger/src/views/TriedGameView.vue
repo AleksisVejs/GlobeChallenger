@@ -65,4 +65,11 @@ export default {
   width: 100px;
   margin: 0;
 }
+
+#play-again-button:hover {
+  background-color: #e5ff00;
+  color: #000000;
+  border: 2px solid #e5ff00;
+  box-shadow: 0px 0px 10px 0px #e5ff00;
+}
 </style>

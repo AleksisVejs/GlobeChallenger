@@ -65,6 +65,13 @@ export default {
   margin: 0;
 }
 
+#play-again-button:hover {
+  background-color: #ff0000;
+  color: #ffffff;
+  border: 2px solid #ff0000;
+  box-shadow: 0px 0px 10px 0px #ff0000;
+}
+
 @media (max-width: 768px) {
   .end-game-main-div {
     padding: 50px;
