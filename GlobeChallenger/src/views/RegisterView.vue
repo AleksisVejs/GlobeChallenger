@@ -53,74 +53,30 @@
 export default {
   data() {
     return {
-      email: "",
-      username: "",
-      password: "",
-      createdAt: "",
       showPassword: false,
       iconClass: "fas fa-eye",
-      flagGameScore: {
-        All: 0,
-        Europe: 0,
-        Asia: 0,
-        Africa: 0,
-        Americas: 0,
-        Oceania: 0,
-      },
-      populationGameScore: 0,
-      capitalGameScore: 0,
+      email: "",
+      username: "",
+      password: ""
     };
   },
   methods: {
-    register() {
-      const newUser = {
-        email: this.email,
-        username: this.username,
-        password: this.password,
-        createdAt: new Date().toLocaleDateString(),
-        flagGameScore: this.flagGameScore,
-        populationGameScore: this.populationGameScore,
-        capitalGameScore: this.capitalGameScore,
-      };
-
-      const existingUserData = require("../users.json");
-
-      // Check if username already exists
-      const existingUser = existingUserData.find(
-        (user) => user.username === newUser.username
-      );
-      const existingEmail = existingUserData.find(
-        (user) => user.email === newUser.email
-      );
-
-      if (existingUser || existingEmail) {
-        alert("User already exists with this username or email");
-        return;
-      }
-
-      const highestId =
-        existingUserData.reduce(
-          (maxId, user) => (user.id > maxId ? user.id : maxId),
-          0
-        ) + 1;
-
-      newUser.id = highestId;
-
-      existingUserData.push(newUser);
-
-      this.email = "";
-      this.username = "";
-      this.password = "";
-
-      alert("Registration successful");
-      this.$router.push("/");
-    },
-
     togglePasswordVisibility() {
       this.showPassword = !this.showPassword;
       this.iconClass = this.showPassword ? "fas fa-eye-slash" : "fas fa-eye";
     },
-  },
+    register() {
+      this.$store
+        .dispatch("register", {
+          email: this.email,
+          username: this.username,
+          password: this.password
+        })
+        .then(() => {
+          this.$router.push("/login");
+        });
+    }
+  }
 };
 </script>
 

@@ -53,40 +53,28 @@
 </template>
 
 <script>
-import usersData from "../users.json";
-
 export default {
   data() {
     return {
-      username: "",
-      password: "",
       showPassword: false,
       iconClass: "fas fa-eye",
+      username: "",
+      password: "",
     };
   },
   methods: {
-    async login() {
-      try {
-        const user = usersData.find(
-          (u) => u.username === this.username && u.password === this.password
-        );
-
-        if (user) {
-          const token = user.username;
-
-          this.$store.dispatch("login", { user, token });
-          this.$router.push("/");
-        } else {
-          alert("Login failed: Invalid credentials");
-        }
-      } catch (error) {
-        console.error("Login failed:", error);
-      }
+    login() {
+      this.$store.dispatch("login", {
+        username: this.username,
+        password: this.password,
+      });
+      this.$router.push("/");
     },
-
     togglePasswordVisibility() {
       this.showPassword = !this.showPassword;
-      this.iconClass = this.showPassword ? "fas fa-eye-slash" : "fas fa-eye";
+      this.iconClass = this.show
+        ? "fas fa-eye-slash"
+        : "fas fa-eye";
     },
   },
 };

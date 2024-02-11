@@ -124,35 +124,24 @@
 
 <script>
 export default {
-  data() {
-    return {
-      list: {
-        flag: false,
-        population: false,
-        capital: false,
-      },
-    };
-  },
+  name: 'UserInfo',
   computed: {
     user() {
-      const user = this.$store.state.user;
-      if (!user || !user.flagGameScore) {
-        return {};
-      }
-      return user;
+      return this.$store.state.user;
     },
   },
-
   methods: {
-    toggleList(game) {
-      this.list[game] = !this.list[game];
-    },
-
     iconList(game) {
-      return this.list[game] ? "chevron-up" : "chevron-down";
+      if (this.user && this.user.gameList) {
+        return this.user.gameList[game] ? 'chevron-up' : 'chevron-down';
+      }
+      return 'chevron-down';
+    },
+    toggleList(game) {
+      this.$store.dispatch('toggleGameList', game);
     },
   },
-};
+}
 </script>
 
 <style scoped>
