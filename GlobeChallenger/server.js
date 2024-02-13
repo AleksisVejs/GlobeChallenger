@@ -23,10 +23,8 @@ const db = new sqlite3.Database("./db/database.db", (err) => {
 });
 
 // Define routes
-// Add your routes for authentication (register, login, logout) here
 app.post("/api/register", (req, res) => {
   const { email, username, password } = req.body;
-  // SQLite expects date in the format "YYYY-MM-DD"
   const createdAt = new Date().toISOString().split("T")[0];
   db.run(
     "INSERT INTO users (email, username, password, createdAt) VALUES (?, ?, ?, ?)",
@@ -34,7 +32,7 @@ app.post("/api/register", (req, res) => {
     (err) => {
       if (err) {
         console.error("Registration failed:", err.message);
-        res.status(500).send("Registration failed");
+        res.status(500).send(err.message);
       } else {
         res.status(200).send("Registration successful");
       }
@@ -50,15 +48,18 @@ app.post("/api/login", (req, res) => {
     (err, row) => {
       if (err) {
         console.error("Login failed:", err.message);
-        res.status(500).send("Login failed");
-      } else if (!row) {
-        res.status(401).send("Username or password is incorrect");
-      } else {
-        // Generate JWT token
-        const token = jwt.sign({ userId: row.id }, "secret_key", {
+        res.status(500).send(err.message);
+      } else if (row) {
+        // User found, return user data and token
+        const { id, email, username, createdAt } = row;
+        const user = { id, email, username, createdAt };
+        const token = jwt.sign({ id: user.id }, "secret_key", {
           expiresIn: "1h",
         });
-        res.status(200).json({ user: row, token: token });
+        res.status(200).json({ user, token });
+      } else {
+        // No user found with the provided username and password
+        res.status(401).send("Invalid username or password.");
       }
     }
   );
@@ -69,22 +70,33 @@ app.post("/api/logout", (req, res) => {
 });
 
 app.get("/api/user", (req, res) => {
-  const token = req.headers.authorization.split(" ")[1]; // Extract token from Authorization header
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.includes(" ")) {
+    return res.status(401).send("Missing or malformed authorization header");
+  }
+
+  const token = authHeader.split(" ")[1];
+  if (!token) {
+    return res.status(401).send("Missing token");
+  }
+
   try {
-    // Verify token
     const decoded = jwt.verify(token, "secret_key");
-    const userId = decoded.userId;
-    // Query database to get user information
-    db.get("SELECT * FROM users WHERE id = ?", [userId], (err, row) => {
-      if (err) {
-        console.error("Failed to fetch user:", err.message);
-        res.status(500).send("Failed to fetch user");
-      } else if (!row) {
-        res.status(404).send("User not found");
-      } else {
-        res.status(200).json(row); // Send user information as JSON response
+    const userId = decoded.id;
+    db.get(
+      "SELECT id, email, username, createdAt FROM users WHERE id = ?",
+      [userId],
+      (err, row) => {
+        if (err) {
+          console.error("Failed to fetch user:", err.message);
+          res.status(500).send(err.message);
+        } else if (row) {
+          res.status(200).json(row);
+        } else {
+          res.status(404).send("User not found");
+        }
       }
-    });
+    );
   } catch (error) {
     console.error("Failed to verify token:", error.message);
     res.status(401).send("Unauthorized");

@@ -1,5 +1,6 @@
 <template>
   <div class="login">
+    <ErrorMessage :message="errorMessage" />
     <div class="login-main-div">
       <div class="login-header">
         <h1>Login</h1>
@@ -53,7 +54,17 @@
 </template>
 
 <script>
+import ErrorMessage from "../components/errorMessage.vue";
+
 export default {
+  components: {
+    ErrorMessage,
+  },
+  computed: {
+    errorMessage() {
+      return this.$store.getters.errorMsg;
+    },
+  },
   data() {
     return {
       showPassword: false,
@@ -63,18 +74,29 @@ export default {
     };
   },
   methods: {
-    login() {
-      this.$store.dispatch("login", {
-        username: this.username,
-        password: this.password,
-      });
-      this.$router.push("/");
+    async login() {
+      try {
+        await this.$store.dispatch("login", {
+          username: this.username,
+          password: this.password,
+        });
+        if (!this.errorMessage) {
+          this.$router.push("/");
+        }
+      } catch (error) {
+        console.error("Login failed:", error);
+      }
     },
     togglePasswordVisibility() {
       this.showPassword = !this.showPassword;
-      this.iconClass = this.show
-        ? "fas fa-eye-slash"
-        : "fas fa-eye";
+      this.iconClass = this.show ? "fas fa-eye-slash" : "fas fa-eye";
+    },
+  },
+  watch: {
+    errorMessage() {
+      setTimeout(() => {
+        this.$store.commit("clearErrorMsg");
+      }, 3000);
     },
   },
 };

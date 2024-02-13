@@ -1,5 +1,6 @@
 <template>
   <div class="register">
+    <ErrorMessage :message="errorMessage" />
     <div class="register-main-div">
       <div class="register-header">
         <h1>Register</h1>
@@ -50,7 +51,17 @@
 </template>
 
 <script>
+import ErrorMessage from "../components/errorMessage.vue";
+
 export default {
+  components: {
+    ErrorMessage
+  },
+  computed: {
+    errorMessage() {
+      return this.$store.getters.errorMsg;
+    }
+  },
   data() {
     return {
       showPassword: false,
@@ -73,8 +84,17 @@ export default {
           password: this.password
         })
         .then(() => {
-          this.$router.push("/login");
+          if (!this.errorMessage) {
+            this.$router.push("/login");
+          }
         });
+    }
+  },
+  watch: {
+    errorMessage() {
+      setTimeout(() => {
+        this.$store.commit("clearErrorMsg");
+      }, 3000);
     }
   }
 };
