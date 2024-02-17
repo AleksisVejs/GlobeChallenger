@@ -15,20 +15,12 @@
       </h1>
     </div>
     <div class="right-links">
-      <router-link v-if="$store.getters.isAuthenticated" to="/profile">
-        Profile
-      </router-link>
-      <button
-        v-if="$store.getters.isAuthenticated"
-        @click="logout"
-        class="logout-button"
-      >
+      <router-link v-if="isAuthenticated" to="/profile"> Profile </router-link>
+      <button v-if="isAuthenticated" @click="logout" class="logout-button">
         Logout
       </button>
-      <router-link v-if="!$store.getters.isAuthenticated" to="/login">
-        Login
-      </router-link>
-      <router-link v-if="!$store.getters.isAuthenticated" to="/register">
+      <router-link v-if="!isAuthenticated" to="/login"> Login </router-link>
+      <router-link v-if="!isAuthenticated" to="/register">
         Register
       </router-link>
     </div>
@@ -37,6 +29,11 @@
 
 <script>
 export default {
+  computed: {
+    isAuthenticated() {
+      return this.$store.getters.isAuthenticated;
+    },
+  },
   methods: {
     logout() {
       this.$store.dispatch("logout");

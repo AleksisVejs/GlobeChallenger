@@ -1,7 +1,9 @@
 <template>
-    <div v-if="message" class="error-message">
-        {{ message }}
-    </div>
+    <transition name="fade">
+        <div v-if="message" class="error-message">
+            {{ message }}
+        </div>
+    </transition>
 </template>
   
 <script>
@@ -16,6 +18,14 @@ export default {
 </script>
 
 <style scoped>
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+}
+
+.fade-enter, .fade-leave-to {
+    opacity: 0;
+}
+
 .error-message {
     position: fixed;
     font-size: 20px;

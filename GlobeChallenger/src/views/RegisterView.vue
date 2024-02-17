@@ -19,7 +19,6 @@
               id="username"
               v-model="username"
               required
-              autocomplete="off"
             />
             <label for="username">Username</label>
             <font-awesome-icon :icon="['fas', 'user']" class="form-icon" />

@@ -15,12 +15,12 @@ const store = createStore({
     },
     setToken(state, token) {
       state.token = token;
-      localStorage.setItem(TOKEN_KEY, token);
     },
     clearUser(state) {
       state.user = null;
       state.token = null;
       localStorage.removeItem(TOKEN_KEY);
+      sessionStorage.removeItem(TOKEN_KEY);
     },
     setErrorMsg(state, errorMsg) {
       state.errorMsg = errorMsg;
@@ -30,7 +30,7 @@ const store = createStore({
     },
   },
   actions: {
-    async login({ commit }, { username, password }) {
+    async login({ commit }, { username, password, rememberMe }) {
       try {
         const response = await axios.post("http://localhost:3000/api/login", {
           username,
@@ -40,8 +40,13 @@ const store = createStore({
         commit("setUser", user);
         commit("setToken", token);
         commit("setErrorMsg", "");
+
+        if (rememberMe) {
+          localStorage.setItem(TOKEN_KEY, token);
+        } else {
+          sessionStorage.setItem(TOKEN_KEY, token);
+        }
       } catch (error) {
-        console.error("Login failed:", error);
         if (
           error.response &&
           error.response.data &&
@@ -69,7 +74,6 @@ const store = createStore({
         commit("setToken", token);
         commit("setErrorMsg", "");
       } catch (error) {
-        console.error("Registration failed:", error);
         if (
           error.response &&
           error.response.data &&
@@ -105,21 +109,29 @@ const store = createStore({
         await axios.post("http://localhost:3000/api/logout");
         commit("clearUser");
       } catch (error) {
-        console.error("Logout failed:", error);
+        console.error("Failed to logout:", error);
       }
     },
 
     async fetchUser({ commit, state }) {
+      let token = state.token;
+      if (!token) {
+        token =
+          localStorage.getItem(TOKEN_KEY) || sessionStorage.getItem(TOKEN_KEY);
+      }
+      if (!token) {
+        return;
+      }
       try {
         const response = await axios.get("http://localhost:3000/api/user", {
           headers: {
-            Authorization: `Bearer ${state.token}`,
+            Authorization: `Bearer ${token}`,
           },
         });
         commit("setUser", response.data);
+        commit("setToken", token);
       } catch (error) {
-        console.error("Failed to fetch user:", error);
-        commit("clearUser"); // Clear user information in case of error
+        commit("clearUser");
       }
     },
   },

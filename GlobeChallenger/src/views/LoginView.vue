@@ -13,7 +13,7 @@
               id="username"
               v-model="username"
               required
-              autofocus
+              ref="usernameInput"
             />
             <label for="username">Username</label>
             <font-awesome-icon :icon="['fas', 'user']" class="form-icon" />
@@ -23,6 +23,7 @@
               id="password"
               v-model="password"
               required
+              autocomplete="off"
               :type="showPassword ? 'text' : 'password'"
             />
             <label for="password">Password</label>
@@ -39,6 +40,7 @@
               id="demo_opt_1"
               type="checkbox"
               class="css-checkbox"
+              v-model="rememberMe"
             />
             <label for="demo_opt_1">Remember Me</label>
           </div>
@@ -71,7 +73,13 @@ export default {
       iconClass: "fas fa-eye",
       username: "",
       password: "",
+      rememberMe: false,
     };
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.$refs.usernameInput.focus();
+    });
   },
   methods: {
     async login() {
@@ -79,6 +87,7 @@ export default {
         await this.$store.dispatch("login", {
           username: this.username,
           password: this.password,
+          rememberMe: this.rememberMe,
         });
         if (!this.errorMessage) {
           this.$router.push("/");
@@ -89,7 +98,7 @@ export default {
     },
     togglePasswordVisibility() {
       this.showPassword = !this.showPassword;
-      this.iconClass = this.show ? "fas fa-eye-slash" : "fas fa-eye";
+      this.iconClass = this.showPassword ? "fas fa-eye-slash" : "fas fa-eye";
     },
   },
   watch: {
