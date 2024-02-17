@@ -96,6 +96,7 @@ export default {
         medium: 3,
         hard: 1,
       },
+      gameId: 1,
     };
   },
   methods: {
@@ -179,6 +180,7 @@ export default {
           .includes(this.answer.toLowerCase())
       ) {
         this.points++;
+        this.submitScore();
         this.answer = "";
         this.countries = this.countries.filter(
           (country) => country.name.common !== this.countryName
@@ -200,6 +202,21 @@ export default {
           this.showXImage = false;
         }, 2000);
       }
+    },
+
+    submitScore() {
+      const info = {
+        gameId: this.gameId,
+        difficultyId:
+          this.selectedMode === "easy"
+            ? 1
+            : this.selectedMode === "medium"
+            ? 2
+            : 3,
+        region: this.selectedRegion,
+        score: this.points,
+      };
+      this.$store.dispatch("updateScore", info);
     },
   },
   mounted() {

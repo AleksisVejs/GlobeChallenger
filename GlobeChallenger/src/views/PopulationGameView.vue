@@ -68,6 +68,7 @@ export default {
       showXImage: false,
       showCorrectImage: false,
       currentlyOnPage: true,
+      gameId: 2,
     };
   },
   computed: {
@@ -165,6 +166,7 @@ export default {
               this.swapCountries();
             } else if (this.currentlyOnPage) {
               this.showXImage = false;
+              this.submitScore();
               this.$router.push({
                 name: "population-result",
                 query: { points: this.points },
@@ -173,6 +175,16 @@ export default {
           }, 3000);
         }
       }, 10);
+    },
+
+    submitScore() {
+      const info = {
+        gameId: this.gameId,
+        difficultyId: null,
+        region: null,
+        score: this.points,
+      };
+      this.$store.dispatch("updateScore", info);
     },
   },
 

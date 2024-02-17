@@ -18,104 +18,22 @@
       </div>
       <div class="game-stats">
         <h2>Game Statistics</h2>
-        <div class="game-stat">
-          <div class="game-stat-title">
-            <h3>
-              <font-awesome-icon
-                class="profile-icon"
-                :icon="['fas', 'flag']"
-                size="sm"
-              />
-              Flag Game
-              <font-awesome-icon
-                class="icon-game-list"
-                @click="toggleList('flag')"
-                :icon="['fas', iconList('flag')]"
-                size="sm"
-              />
-            </h3>
-            <transition name="slide">
-              <ul
-                v-if="user && iconList('flag') === 'chevron-up'"
-                class="game-stat-list"
-              >
-                <li>
-                  All: {{ user.flagGameScore ? user.flagGameScore.All : "" }}
-                </li>
-                <li>
-                  Africa:
-                  {{ user.flagGameScore ? user.flagGameScore.Africa : "" }}
-                </li>
-                <li>
-                  Americas:
-                  {{ user.flagGameScore ? user.flagGameScore.Americas : "" }}
-                </li>
-                <li>
-                  Asia: {{ user.flagGameScore ? user.flagGameScore.Asia : "" }}
-                </li>
-                <li>
-                  Europe:
-                  {{ user.flagGameScore ? user.flagGameScore.Europe : "" }}
-                </li>
-                <li>
-                  Oceania:
-                  {{ user.flagGameScore ? user.flagGameScore.Oceania : "" }}
-                </li>
-              </ul>
-            </transition>
-          </div>
-        </div>
-        <div class="game-stat">
-          <div class="game-stat-title">
-            <h3>
-              <font-awesome-icon
-                class="profile-icon"
-                :icon="['fas', 'users']"
-                size="sm"
-              />
-              Population Game
-              <font-awesome-icon
-                class="icon-game-list"
-                @click="toggleList('population')"
-                :icon="['fas', iconList('population')]"
-                size="sm"
-              />
-            </h3>
-            <transition name="slide">
-              <ul
-                v-if="user && iconList('population') === 'chevron-up'"
-                class="game-stat-list"
-              >
-                <li>Best Score: {{ user.populationGameScore }}</li>
-              </ul>
-            </transition>
-          </div>
-        </div>
-        <div class="game-stat">
-          <div class="game-stat-title">
-            <h3>
-              <font-awesome-icon
-                class="profile-icon"
-                :icon="['fas', 'city']"
-                size="sm"
-              />
-              Population Game
-              <font-awesome-icon
-                class="icon-game-list"
-                @click="toggleList('capital')"
-                :icon="['fas', iconList('capital')]"
-                size="sm"
-              />
-            </h3>
-            <transition name="slide">
-              <ul
-                v-if="user && iconList('capital') === 'chevron-up'"
-                class="game-stat-list"
-              >
-                <li>Best Score: {{ user.capitalGameScore }}</li>
-              </ul>
-            </transition>
-          </div>
+        <select v-model="selectedGame">
+          <option v-for="game in games" :key="game.name">
+            {{ game.name }}
+          </option>
+        </select>
+        <div v-if="selectedGame == 'Flag Game'">
+          <select v-model="selectedDifficulty">
+            <option value="1">Easy</option>
+            <option value="2">Medium</option>
+            <option value="3">Hard</option>
+          </select>
+          <select v-model="selectedRegion">
+            <option v-for="region in allRegions" :key="region">
+              {{ region.charAt(0).toUpperCase() + region.slice(1) }}
+            </option>
+          </select>
         </div>
       </div>
     </div>
@@ -123,25 +41,82 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: 'UserInfo',
+  name: "UserInfo",
+  data() {
+    return {
+      games: [],
+      dropdowns: [false],
+      allRegions: ["all", "africa", "asia", "europe", "americas", "oceania"],
+      selectedGame: null,
+      selectedDifficulty: null,
+      selectedRegion: null,
+    };
+  },
+
   computed: {
     user() {
       return this.$store.state.user;
     },
+    selectedGameName() {
+      if (this.selectedGame !== null) {
+        const game = this.games.find((game) => game.name === this.selectedGame);
+        return game ? game.name : "";
+      }
+      return "";
+    },
   },
   methods: {
-    iconList(game) {
-      if (this.user && this.user.gameList) {
-        return this.user.gameList[game] ? 'chevron-up' : 'chevron-down';
+    getGameName(gameId) {
+      switch (gameId) {
+        case 1:
+          return "Flag Game";
+        case 2:
+          return "Population Game";
+        case 3:
+          return "Capital Game";
+        default:
+          return "Unknown Game";
       }
-      return 'chevron-down';
-    },
-    toggleList(game) {
-      this.$store.dispatch('toggleGameList', game);
     },
   },
-}
+  async created() {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/api/scores/${this.user.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${this.$store.state.token}`,
+          },
+        }
+      );
+      const scores = response.data.scores;
+      const gameMap = new Map();
+
+      scores.forEach((score) => {
+        if (!gameMap.has(score.game_id)) {
+          gameMap.set(score.game_id, []);
+        }
+        gameMap.get(score.game_id).push(score);
+      });
+
+      this.games = Array.from(gameMap, ([game_id, scores]) => ({
+        name: this.getGameName(game_id),
+        scores: scores,
+      }));
+    } catch (error) {
+      console.error("Failed to fetch scores:", error.message);
+    }
+  },
+  watch: {
+    selectedGameName() {
+      this.selectedDifficulty = null;
+      this.selectedRegion = null;
+    },
+  },
+};
 </script>
 
 <style scoped>

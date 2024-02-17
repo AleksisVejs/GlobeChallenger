@@ -134,7 +134,39 @@ const store = createStore({
         commit("clearUser");
       }
     },
+
+    async updateScore({ state }, { gameId, difficultyId, region, score }) {
+      try {
+        console.log("Updating score:", gameId, difficultyId, region, score);
+        const response = await axios.post(
+          "http://localhost:3000/api/score",
+          {
+            userId: state.user.id,
+            gameId,
+            difficultyId,
+            region,
+            score,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${state.token}`,
+            },
+          }
+        );
+        if (response.status === 200) {
+          console.log("Score updated successfully");
+        } else {
+          console.error(
+            "Failed to update score. Server returned status:",
+            response.status
+          );
+        }
+      } catch (error) {
+        console.error("Failed to update score:", error.message);
+      }
+    },
   },
+
   getters: {
     isAuthenticated: (state) => !!state.user,
     errorMsg: (state) => state.errorMsg,

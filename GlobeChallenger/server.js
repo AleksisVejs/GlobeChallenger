@@ -103,6 +103,102 @@ app.get("/api/user", (req, res) => {
   }
 });
 
+app.post("/api/score", (req, res) => {
+  const { userId, gameId, difficultyId, region, score } = req.body;
+  // Input validation
+  if (!userId || !gameId || score === null || score === undefined) {
+    return res.status(400).json({ error: "Invalid input parameters" });
+  }
+
+  let queryParams = [userId, gameId];
+  let sqlQuery =
+    "SELECT score FROM game_scores WHERE user_id = ? AND game_id = ?";
+
+  // Add difficultyId and region to the query parameters and SQL query if they are not null
+  if (difficultyId !== null && difficultyId !== undefined) {
+    sqlQuery += " AND difficulty_id = ?";
+    queryParams.push(difficultyId);
+  }
+  if (region !== null && region !== undefined) {
+    sqlQuery += " AND region = ?";
+    queryParams.push(region);
+  }
+
+  db.get(sqlQuery, queryParams, (err, row) => {
+    if (err) {
+      console.error("Failed to fetch score:", err.message);
+      return res.status(500).json({ error: "Failed to fetch score" });
+    }
+
+    if (!row) {
+      // If row doesn't exist, insert the new score
+      db.run(
+        "INSERT INTO game_scores (user_id, game_id, difficulty_id, region, score) VALUES (?, ?, ?, ?, ?)",
+        [userId, gameId, difficultyId, region, score],
+        (err) => {
+          if (err) {
+            console.error("Failed to insert score:", err.message);
+            return res.status(500).json({ error: "Failed to insert score" });
+          }
+          res.status(200).json({ message: "Score inserted" });
+        }
+      );
+    } else if (score > row.score) {
+      // If the new score is higher, update the existing row
+      db.run(
+        "UPDATE game_scores SET score = ? WHERE user_id = ? AND game_id = ?" +
+          (difficultyId !== null && difficultyId !== undefined
+            ? " AND difficulty_id = ?"
+            : "") +
+          (region !== null && region !== undefined ? " AND region = ?" : ""),
+        [
+          ...(difficultyId !== null && difficultyId !== undefined
+            ? [score, userId, gameId, difficultyId]
+            : [score, userId, gameId]),
+          ...(region !== null && region !== undefined ? [region] : []),
+        ],
+        (err) => {
+          if (err) {
+            console.error("Failed to update score:", err.message);
+            return res.status(500).json({ error: "Failed to update score" });
+          }
+          res.status(200).json({ message: "Score updated" });
+        }
+      );
+    } else {
+      // If the new score is not higher, return a message indicating that
+      res.status(200).json({
+        message: "Score not updated, but existing score is higher",
+      });
+    }
+  });
+});
+
+app.get("/api/scores/:userId", (req, res) => {
+  const userId = req.params.userId;
+
+  // Input validation
+  if (!userId) {
+    return res.status(400).json({ error: "Invalid input parameters" });
+  }
+
+  let sqlQuery = "SELECT * FROM game_scores WHERE user_id = ?";
+  let queryParams = [userId];
+
+  db.all(sqlQuery, queryParams, (err, rows) => {
+    if (err) {
+      console.error("Failed to fetch scores:", err.message);
+      return res.status(500).json({ error: "Failed to fetch scores" });
+    }
+
+    if (!rows) {
+      return res.status(404).json({ error: "No scores found for this user" });
+    }
+
+    res.status(200).json({ scores: rows });
+  });
+});
+
 // Start server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

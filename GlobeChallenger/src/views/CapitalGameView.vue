@@ -61,6 +61,7 @@ export default {
       countryFour: { name: "", capital: "" },
       points: 0,
       buttonClass: ["", "", "", ""],
+      gameId: 3,
     };
   },
   methods: {
@@ -128,6 +129,7 @@ export default {
       });
       if (answer === this.capital) {
         this.points++;
+        this.submitScore();
         this.buttonClass = ["", "", "", ""];
         this.buttonClass[index] = "green-button";
       } else {
@@ -144,8 +146,19 @@ export default {
       }, 1000);
 
       if (this.points < 0) {
+        this.points = 0;
         this.$router.push({ name: "game-over" });
       }
+    },
+
+    submitScore() {
+      const info = {
+        gameId: this.gameId,
+        difficultyId: null,
+        region: null,
+        score: this.points,
+      };
+      this.$store.dispatch("updateScore", info);
     },
   },
   mounted() {
