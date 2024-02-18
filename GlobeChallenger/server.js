@@ -84,7 +84,7 @@ app.get("/api/user", (req, res) => {
     const decoded = jwt.verify(token, "secret_key");
     const userId = decoded.id;
     db.get(
-      "SELECT id, email, username, createdAt FROM users WHERE id = ?",
+      "SELECT id, email, username, createdAt, profile_pic FROM users WHERE id = ?",
       [userId],
       (err, row) => {
         if (err) {

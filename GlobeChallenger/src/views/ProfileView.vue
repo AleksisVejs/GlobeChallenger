@@ -4,7 +4,11 @@
       <div class="profile-header">
         <div class="left-section">
           <div class="profile-picture">
-            <img src="../assets/user.png" alt="Profile Picture" />
+            <img
+              :src="user.profile_pic"
+              alt="Profile Picture"
+              v-if="user.profile_pic"
+            />
           </div>
           <h1>{{ user ? user.username : "" }}</h1>
         </div>
@@ -13,107 +17,30 @@
           <p>Joined: {{ user.createdAt }}</p>
         </div>
         <div class="edit-profile">
-          <button>Edit Profile</button>
-        </div>
-      </div>
-      <div class="game-stats">
-        <h2>Game Statistics</h2>
-        <select v-model="selectedGame">
-          <option v-for="game in games" :key="game.name">
-            {{ game.name }}
-          </option>
-        </select>
-        <div v-if="selectedGame == 'Flag Game'">
-          <select v-model="selectedDifficulty">
-            <option value="1">Easy</option>
-            <option value="2">Medium</option>
-            <option value="3">Hard</option>
-          </select>
-          <select v-model="selectedRegion">
-            <option v-for="region in allRegions" :key="region">
-              {{ region.charAt(0).toUpperCase() + region.slice(1) }}
-            </option>
-          </select>
+          <button @click="editProfile = true">Edit Profile</button>
         </div>
       </div>
     </div>
+    <ProfileEdit v-if="editProfile" :user="user" @close="editProfile = false" />
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import ProfileEdit from "@/components/ProfileEdit";
 
 export default {
   name: "UserInfo",
+  components: {
+    ProfileEdit,
+  },
   data() {
     return {
-      games: [],
-      dropdowns: [false],
-      allRegions: ["all", "africa", "asia", "europe", "americas", "oceania"],
-      selectedGame: null,
-      selectedDifficulty: null,
-      selectedRegion: null,
+      editProfile: false,
     };
   },
-
   computed: {
     user() {
       return this.$store.state.user;
-    },
-    selectedGameName() {
-      if (this.selectedGame !== null) {
-        const game = this.games.find((game) => game.name === this.selectedGame);
-        return game ? game.name : "";
-      }
-      return "";
-    },
-  },
-  methods: {
-    getGameName(gameId) {
-      switch (gameId) {
-        case 1:
-          return "Flag Game";
-        case 2:
-          return "Population Game";
-        case 3:
-          return "Capital Game";
-        default:
-          return "Unknown Game";
-      }
-    },
-  },
-  async created() {
-    try {
-      const response = await axios.get(
-        `http://localhost:3000/api/scores/${this.user.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${this.$store.state.token}`,
-          },
-        }
-      );
-      const scores = response.data.scores;
-      const gameMap = new Map();
-
-      scores.forEach((score) => {
-        if (!gameMap.has(score.game_id)) {
-          gameMap.set(score.game_id, []);
-        }
-        gameMap.get(score.game_id).push(score);
-      });
-
-      this.games = Array.from(gameMap, ([game_id, scores]) => ({
-        name: this.getGameName(game_id),
-        scores: scores,
-      }));
-    } catch (error) {
-      console.error("Failed to fetch scores:", error.message);
-    }
-  },
-  watch: {
-    selectedGameName() {
-      this.selectedDifficulty = null;
-      this.selectedRegion = null;
     },
   },
 };
