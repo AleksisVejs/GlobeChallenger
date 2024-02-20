@@ -19,23 +19,30 @@
         <div class="edit-profile">
           <button @click="editProfile = true">Edit Profile</button>
         </div>
+        <div class="edit-profile">
+          <button @click="showScore = true">View Scores</button>
+        </div>
       </div>
     </div>
     <ProfileEdit v-if="editProfile" :user="user" @close="editProfile = false" />
+    <ViewScore v-if="showScore" :user="user" @close="showScore = false" />
   </div>
 </template>
 
 <script>
 import ProfileEdit from "@/components/ProfileEdit";
+import ViewScore from "@/components/ViewScore";
 
 export default {
   name: "UserInfo",
   components: {
     ProfileEdit,
+    ViewScore,
   },
   data() {
     return {
       editProfile: false,
+      showScore: false,
     };
   },
   computed: {
@@ -126,100 +133,10 @@ export default {
   font-size: 1rem;
 }
 
-.game-stats {
-  flex-grow: 1;
-  margin-left: 60px;
-}
-
-.game-stats h2 {
-  color: #ffffff;
-  font-size: 1.5rem;
-  text-shadow: 0 0 9px #ffffff;
-  margin: 0;
-}
-
-.game-stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
-}
-
-.game-stat-title {
-  border-radius: 5px;
-  padding: 5px 10px;
-  text-align: center;
-}
-
-.game-stat-title h3 {
-  color: #a3ffb3;
-  font-size: 1.2rem;
-  margin: 0;
-  text-shadow: 0 0 5px #a3ffb286;
-  user-select: none;
-}
-
-.icon-game-list {
-  color: #a3ffb3;
-  filter: drop-shadow(0 0 5px #a3ffb3);
-  margin-left: 10px;
-  cursor: pointer;
-}
-
-.icon-game-list:hover {
-  color: #ffffff;
-  filter: drop-shadow(0 0 5px #ffffff);
-}
-
-.game-stat-list {
-  list-style: none;
-  padding: 0;
-  margin-top: 10px;
-  text-align: center;
-}
-
-.game-stat-list li {
-  color: #ffffff;
-  text-shadow: 0 0 5px #ffffff;
-  margin: 5px 0;
-  font-size: 1rem;
-}
-
-.game-stat-list li span {
-  color: #ffffff;
-  margin-right: 5px;
-}
-
 .profile-icon {
   color: #a3ffb3;
   filter: drop-shadow(0 0 5px #a3ffb3);
   margin-right: 10px;
-}
-
-.slide-enter-active {
-  animation: slide-in 0.5s ease-out forwards;
-}
-
-.slide-leave-active {
-  animation: slide-out 0.2s ease-out forwards;
-}
-
-@keyframes slide-in {
-  from {
-    transform: translateY(-5%);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
-
-@keyframes slide-out {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(-5%);
-  }
 }
 
 @media (max-width: 768px) {
@@ -227,19 +144,6 @@ export default {
     padding: 30px 50px 40px 50px;
     flex-direction: column;
     align-items: center;
-  }
-
-  .game-stats {
-    margin-left: 0;
-    margin-top: 30px;
-  }
-
-  .game-stat-title h3 {
-    font-size: 1rem;
-  }
-
-  .game-stat-list li {
-    font-size: 0.8rem;
   }
 
   .edit-profile {
