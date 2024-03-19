@@ -1,17 +1,6 @@
 <template>
   <div id="profile-edit">
     <h1>Profile Edit</h1>
-    <form>
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" />
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" />
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" />
-      <label for="profile_pic">Profile Picture:</label>
-      <input type="file" id="profile_pic" name="profile_pic" />
-      <button type="submit">Submit</button>
-    </form>
     <button @click="$emit('close')">Close</button>
   </div>
 </template>
