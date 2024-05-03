@@ -19,6 +19,9 @@
         <div class="edit-profile">
           <button @click="editProfile = true">Edit Profile</button>
         </div>
+        <button class="delete-button" @click="confirmDelete">
+          Delete Profile
+        </button>
       </div>
     </div>
     <ProfileEdit v-if="editProfile" :user="user" @close="editProfile = false" />
@@ -26,6 +29,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import ProfileEdit from "@/components/ProfileEdit";
 
 export default {
@@ -41,6 +45,14 @@ export default {
   computed: {
     user() {
       return this.$store.state.user;
+    },
+  },
+  methods: {
+    ...mapActions(["deleteUser"]),
+    confirmDelete() {
+      if (confirm("Are you sure you want to delete your profile?")) {
+        this.deleteUser();
+      }
     },
   },
 };
@@ -202,6 +214,19 @@ export default {
 
 .slide-leave-active {
   animation: slide-out 0.2s ease-out forwards;
+}
+
+.delete-button {
+  width: 200px;
+  height: 40px;
+  margin-top: 20px;
+  box-shadow: 0 0 5px #ff0000;
+  border: 2px solid #ff0000;
+}
+
+.delete-button:hover {
+  background-color: #ff0000;
+  color: #ffffff;
 }
 
 @keyframes slide-in {

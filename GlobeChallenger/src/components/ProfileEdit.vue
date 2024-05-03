@@ -1,15 +1,13 @@
 <template>
   <div id="profile-edit">
     <h1>Profile Edit</h1>
-    <form>
+    <form @submit.prevent="onSubmit">
       <label for="username">Username:</label>
-      <input type="text" id="username" name="username" />
+      <input type="text" id="username" name="username" v-model="username" />
       <label for="email">Email:</label>
-      <input type="email" id="email" name="email" />
+      <input type="email" id="email" name="email" v-model="email" />
       <label for="password">Password:</label>
-      <input type="password" id="password" name="password" />
-      <label for="profile_pic">Profile Picture:</label>
-      <input type="file" id="profile_pic" name="profile_pic" />
+      <input type="password" id="password" name="password" v-model="password" />
       <button type="submit">Submit</button>
     </form>
     <button @click="$emit('close')">Close</button>
@@ -17,29 +15,74 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
+
 export default {
   name: "ProfileEdit",
-  data() {
-    return {};
+  computed: {
+    ...mapState(["user"]),
   },
-  methods: {},
+  data() {
+    return {
+      username: "",
+      email: "",
+      password: "",
+      profile_pic: null,
+    };
+  },
+  created() {
+    this.fetchUser();
+  },
+  watch: {
+    user(newUser) {
+      if (newUser) {
+        this.username = newUser.username;
+        this.email = newUser.email;
+        this.password = newUser.password;
+      }
+    },
+  },
+  methods: {
+    ...mapActions(["fetchUser", "updateUser"]),
+    onFileChange(e) {
+      this.profile_pic = e.target.files[0];
+    },
+    onSubmit() {
+      const userData = {
+        username: this.username,
+        email: this.email,
+        password: this.password,
+        profile_pic: this.profile_pic,
+      };
+
+      console.log("User data:", userData);
+
+      this.updateUser(userData);
+    },
+  },
 };
 </script>
 
 <style scoped>
 #profile-edit {
   position: absolute;
-  width: 50%;
+  width: 40%;
   height: 70%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #000000;
+  background-color: #0e0e0e;
   z-index: 2;
+  border-radius: 30px;
+  box-shadow: 0px 0px 100px 0px #a3ffb3;
+  border-style: solid;
+  border-color: #1b1b1b;
+  border: 6px solid #a3ffb3;
 }
 h1 {
-  color: #f1f1f1;
+  color: #a3ffb3;
+  text-shadow: 0 0 12px #a3ffb3;
   font-family: "Montserrat", sans-serif;
 }
 form {
@@ -57,6 +100,15 @@ input {
   padding: 10px 20px;
   margin-top: 20px;
   width: 500px;
+  border-radius: 10px;
+  border: 1px solid #ffffff;
+  background-color: #0e0e0e;
+  color: #f1f1f1;
+}
+
+input:focus {
+  outline: none;
+  border: 1px solid #a3ffb3;
 }
 
 #profile-pic {

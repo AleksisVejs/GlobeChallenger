@@ -165,6 +165,56 @@ const store = createStore({
         console.error("Failed to update score:", error.message);
       }
     },
+    async updateUser({ state }, userData) {
+      try {
+        const filteredData = Object.fromEntries(
+          Object.entries(userData).filter(([, value]) => value !== "")
+        );
+
+        console.log("Filtered data:", filteredData);
+
+        const response = await axios.put(
+          "http://localhost:3000/api/user",
+          filteredData,
+          {
+            headers: {
+              Authorization: `Bearer ${state.token}`,
+            },
+          }
+        );
+        if (response.status === 200) {
+          console.log("User updated successfully");
+        } else {
+          console.error(
+            "Failed to update user. Server returned status:",
+            response.status
+          );
+        }
+      } catch (error) {
+        console.error("Failed to update user:", error.message);
+      }
+    },
+
+    async deleteUser({ state }) {
+      try {
+        const response = await axios.delete("http://localhost:3000/api/user", {
+          headers: {
+            Authorization: `Bearer ${state.token}`,
+          },
+        });
+        if (response.status === 200) {
+          console.log("User deleted successfully");
+          window.location.href = "/";
+        } else {
+          console.error(
+            "Failed to delete user. Server returned status:",
+            response.status
+          );
+        }
+      } catch (error) {
+        console.error("Failed to delete user:", error.message);
+      }
+    },
   },
 
   getters: {

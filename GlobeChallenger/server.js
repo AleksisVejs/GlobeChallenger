@@ -103,6 +103,74 @@ app.get("/api/user", (req, res) => {
   }
 });
 
+app.put("/api/user", (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.includes(" ")) {
+    return res.status(401).send("Missing or malformed authorization header");
+  }
+
+  const token = authHeader.split(" ")[1];
+  if (!token) {
+    return res.status(401).send("Missing token");
+  }
+
+  try {
+    const decoded = jwt.verify(token, "secret_key");
+    const userData = req.body;
+    const newEmail = userData.email;
+
+    db.get("SELECT id FROM users WHERE email = ?", [newEmail], (err, row) => {
+      if (err) {
+        console.error("Failed to fetch user by email:", err.message);
+        res.status(500).send(err.message);
+      } else if (row && row.id !== decoded.id) {
+        res.status(400).send("Email is already in use");
+      } else {
+        const placeholders = Object.keys(userData)
+          .map((key) => `${key} = ?`)
+          .join(", ");
+        const sql = `UPDATE users SET ${placeholders} WHERE id = ?`;
+        db.run(sql, [...Object.values(userData), decoded.id], function (err) {
+          if (err) {
+            console.error("Failed to update user:", err.message);
+            res.status(500).send(err.message);
+          } else {
+            res.status(200).send("User updated successfully");
+          }
+        });
+      }
+    });
+  } catch (error) {
+    res.status(401).send("Unauthorized");
+  }
+});
+
+app.delete("/api/user", (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.includes(" ")) {
+    return res.status(401).send("Missing or malformed authorization header");
+  }
+
+  const token = authHeader.split(" ")[1];
+  if (!token) {
+    return res.status(401).send("Missing token");
+  }
+
+  try {
+    const decoded = jwt.verify(token, "secret_key");
+    db.run("DELETE FROM users WHERE id = ?", [decoded.id], (err) => {
+      if (err) {
+        console.error("Failed to delete user:", err.message);
+        res.status(500).send(err.message);
+      } else {
+        res.status(200).send("User deleted successfully");
+      }
+    });
+  } catch (error) {
+    res.status(401).send("Unauthorized");
+  }
+});
+
 app.post("/api/score", (req, res) => {
   const { userId, gameId, difficultyId, region, score } = req.body;
   // Input validation
