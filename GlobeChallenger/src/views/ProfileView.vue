@@ -156,6 +156,21 @@ export default {
   animation: slide-out 0.2s ease-out forwards;
 }
 
+.delete-button {
+  margin-top: 20px;
+  width: 200px;
+  height: 40px;
+}
+
+.delete-button:hover {
+  background-color: #ff0000;
+  color: #ffffff;
+  border: 1px solid #ff0000;
+  box-shadow: 0 0 10px #ff0000;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
 @keyframes slide-in {
   from {
     transform: translateY(-5%);
