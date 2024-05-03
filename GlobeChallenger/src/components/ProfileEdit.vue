@@ -72,17 +72,11 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #0e0e0e;
+  background-color: #000000;
   z-index: 2;
-  border-radius: 30px;
-  box-shadow: 0px 0px 100px 0px #a3ffb3;
-  border-style: solid;
-  border-color: #1b1b1b;
-  border: 6px solid #a3ffb3;
 }
 h1 {
-  color: #a3ffb3;
-  text-shadow: 0 0 12px #a3ffb3;
+  color: #f1f1f1;
   font-family: "Montserrat", sans-serif;
 }
 form {
