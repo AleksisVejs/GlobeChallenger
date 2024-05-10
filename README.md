@@ -2,14 +2,16 @@
 
 ## How to run
 Clone the repository, open the repository folder in terminal and type these commands:
-- Run the frontend:
+- Move to the root folder:
 ```
 cd GlobeChallenger
+```
+- Run the frontend:
+```
 npm run serve
 ```
 - Run the backend:
 ```
-cd GlobeChallenger
 node server.js
 ```
 
