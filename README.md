@@ -1,5 +1,12 @@
 # Globe Challenger : Geography Quiz Game 🌎
 
+## How to run
+```
+cd GlobeChallenger
+npm run serve
+node server.js
+```
+
 ## Table of Contents
 
 1. [Introduction](#introduction)
