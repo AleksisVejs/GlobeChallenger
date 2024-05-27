@@ -25,7 +25,7 @@ node server.js
 
 ## Introduction
 
-Welcome to Globe Challenger, a geography quiz game that challenges your knowledge of countries. Test your geographical knowledge with this educational and engaging web-based game. 🧠
+Globe Challenger is a geography quiz game that challenges your knowledge of countries. 🧠🌎
 
 ## Features:
 
