@@ -55,6 +55,10 @@ Welcome to Globe Challenger, a geography quiz game that challenges your knowledg
   - Flag Description: You have the option to view a description of the flag.
   - There are no consequences for inaccurate drawings. 🎨
 
+### 🏛️ Capital Game:
+  - Given a country and four capitals, you need to guess which capital is the correct one for the given country.
+  - Accumulate points for each correct guess, but be cautious; incorrect guesses deduct points. Avoid reaching below zero points to stay in the game. 🏆
+
 ## Educational Experience:
 Globe Challenger not only entertains but also enriches your understanding of world geography. It serves as an excellent tool for:
 
