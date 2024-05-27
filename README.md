@@ -1,5 +1,20 @@
 # Globe Challenger : Geography Quiz Game 🌎
 
+## How to run
+Clone the repository, open the repository folder in terminal and type these commands:
+- Move to the root folder:
+```
+cd GlobeChallenger
+```
+- Run the frontend:
+```
+npm run serve
+```
+- Run the backend:
+```
+node server.js
+```
+
 ## Table of Contents
 
 1. [Introduction](#introduction)
