@@ -158,12 +158,21 @@ app.delete("/api/user", (req, res) => {
 
   try {
     const decoded = jwt.verify(token, "secret_key");
-    db.run("DELETE FROM users WHERE id = ?", [decoded.id], (err) => {
+    db.run("DELETE FROM game_scores WHERE user_id = ?", [decoded.id], (err) => {
       if (err) {
-        console.error("Failed to delete user:", err.message);
+        console.error("Failed to delete user's scores:", err.message);
         res.status(500).send(err.message);
       } else {
-        res.status(200).send("User deleted successfully");
+        db.run("DELETE FROM users WHERE id = ?", [decoded.id], (err) => {
+          if (err) {
+            console.error("Failed to delete user:", err.message);
+            res.status(500).send(err.message);
+          } else {
+            res
+              .status(200)
+              .send("User and related scores deleted successfully");
+          }
+        });
       }
     });
   } catch (error) {
@@ -250,8 +259,14 @@ app.get("/api/scores/:userId", (req, res) => {
     return res.status(400).json({ error: "Invalid input parameters" });
   }
 
-  let sqlQuery = "SELECT * FROM game_scores WHERE user_id = ?";
-  let queryParams = [userId];
+  const sqlQuery = `
+    SELECT gs.game_id, g.name as game_name, gs.difficulty_id, d.name as difficulty_name, gs.region, gs.score
+    FROM game_scores gs
+    LEFT JOIN games g ON gs.game_id = g.id
+    LEFT JOIN difficulties d ON gs.difficulty_id = d.id
+    WHERE gs.user_id = ?
+    `;
+  const queryParams = [userId];
 
   db.all(sqlQuery, queryParams, (err, rows) => {
     if (err) {
@@ -259,11 +274,37 @@ app.get("/api/scores/:userId", (req, res) => {
       return res.status(500).json({ error: "Failed to fetch scores" });
     }
 
-    if (!rows) {
-      return res.status(404).json({ error: "No scores found for this user" });
+    if (!rows.length) {
+      return res
+        .status(200)
+        .json({ scores: [], message: "No scores found for this user" });
     }
 
-    res.status(200).json({ scores: rows });
+    const scores = rows.reduce((acc, row) => {
+      if (!acc[row.game_id]) acc[row.game_id] = { game_name: row.game_name };
+
+      if (row.difficulty_id) {
+        if (!acc[row.game_id].difficulties) acc[row.game_id].difficulties = {};
+        if (!acc[row.game_id].difficulties[row.difficulty_id])
+          acc[row.game_id].difficulties[row.difficulty_id] = {
+            difficulty_name: row.difficulty_name,
+            scores: [],
+          };
+        acc[row.game_id].difficulties[row.difficulty_id].scores.push({
+          region: row.region,
+          score: row.score,
+        });
+      } else {
+        if (!acc[row.game_id].scores) acc[row.game_id].scores = [];
+        acc[row.game_id].scores.push({
+          score: row.score,
+        });
+      }
+
+      return acc;
+    }, {});
+
+    res.status(200).json({ scores });
   });
 });
 

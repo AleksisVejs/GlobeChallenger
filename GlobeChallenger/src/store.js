@@ -8,6 +8,7 @@ const store = createStore({
     user: null,
     token: localStorage.getItem(TOKEN_KEY) || null,
     errorMsg: null,
+    userScores: {},
   },
   mutations: {
     setUser(state, user) {
@@ -27,6 +28,9 @@ const store = createStore({
     },
     clearErrorMsg(state) {
       state.errorMsg = null;
+    },
+    setUserScores(state, scores) {
+      state.userScores = scores;
     },
   },
   actions: {
@@ -135,7 +139,37 @@ const store = createStore({
       }
     },
 
+    async fetchUserScores({ commit, state }, userId) {
+      const token = state.token;
+      if (!token) {
+        return;
+      }
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/api/scores/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (response.status === 200) {
+          commit("setUserScores", response.data.scores);
+        } else {
+          console.error(
+            "Failed to fetch user scores. Server returned status:",
+            response.status
+          );
+        }
+      } catch (error) {
+        console.error("Failed to fetch user scores:", error.message);
+      }
+    },
+
     async updateScore({ state }, { gameId, difficultyId, region, score }) {
+      if (!state.user) {
+        return;
+      }
       try {
         console.log("Updating score:", gameId, difficultyId, region, score);
         const response = await axios.post(
@@ -165,6 +199,7 @@ const store = createStore({
         console.error("Failed to update score:", error.message);
       }
     },
+
     async updateUser({ state }, userData) {
       try {
         const filteredData = Object.fromEntries(
@@ -182,13 +217,13 @@ const store = createStore({
             },
           }
         );
-        if (response.status === 200) {
-          console.log("User updated successfully");
-        } else {
-          console.error(
-            "Failed to update user. Server returned status:",
-            response.status
-          );
+        if (response.status != 200) {
+          {
+            console.error(
+              "Failed to update user. Server returned status:",
+              response.status
+            );
+          }
         }
       } catch (error) {
         console.error("Failed to update user:", error.message);
@@ -203,7 +238,6 @@ const store = createStore({
           },
         });
         if (response.status === 200) {
-          console.log("User deleted successfully");
           window.location.href = "/";
         } else {
           console.error(

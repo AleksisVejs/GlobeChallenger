@@ -3,20 +3,16 @@
     <div class="profile-main-div">
       <div class="profile-header">
         <div class="left-section">
-          <div class="profile-picture">
-            <img
-              :src="user.profile_pic"
-              alt="Profile Picture"
-              v-if="user.profile_pic"
-            />
-          </div>
           <h1>{{ user ? user.username : "" }}</h1>
         </div>
         <div class="user-info" v-if="user">
           <p>Email: {{ user.email }}</p>
           <p>Joined: {{ user.createdAt }}</p>
         </div>
-        <div class="edit-profile">
+        <div class="profile-button">
+          <button @click="showScore = true">View Score</button>
+        </div>
+        <div class="profile-button">
           <button @click="editProfile = true">Edit Profile</button>
         </div>
         <button class="delete-button" @click="confirmDelete">
@@ -25,12 +21,16 @@
       </div>
     </div>
     <ProfileEdit v-if="editProfile" :user="user" @close="editProfile = false" />
-    <ViewScore v-if="showScore" :user="user" @close="showScore = false" />
+    <ViewScore
+      v-if="showScore && userScores"
+      :scores="userScores"
+      @close="showScore = false"
+    />
   </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 import ProfileEdit from "@/components/ProfileEdit";
 import ViewScore from "@/components/ViewScore";
 
@@ -47,17 +47,20 @@ export default {
     };
   },
   computed: {
-    user() {
-      return this.$store.state.user;
-    },
+    ...mapState(["user", "userScores"]),
   },
   methods: {
-    ...mapActions(["deleteUser"]),
+    ...mapActions(["deleteUser", "fetchUserScores"]),
     confirmDelete() {
       if (confirm("Are you sure you want to delete your profile?")) {
         this.deleteUser();
       }
     },
+  },
+  mounted() {
+    if (this.user) {
+      this.fetchUserScores(this.user.id);
+    }
   },
 };
 </script>
@@ -107,28 +110,9 @@ export default {
   text-shadow: 0 0 12px #ffffff;
 }
 
-.edit-profile {
-  margin-top: 20px;
-}
-
-.edit-profile button {
+.profile-button button {
   width: 200px;
   height: 40px;
-}
-
-.profile-picture {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin-right: 20px;
-  box-shadow: 0 0 20px #ffffff6b;
-}
-
-.profile-picture img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 .user-info {
@@ -157,7 +141,6 @@ export default {
 }
 
 .delete-button {
-  margin-top: 20px;
   width: 200px;
   height: 40px;
 }
@@ -196,7 +179,7 @@ export default {
     align-items: center;
   }
 
-  .edit-profile {
+  .profile-button {
     margin: 0;
   }
 

@@ -2,15 +2,37 @@
   <div id="profile-edit">
     <h1>Profile Edit</h1>
     <form @submit.prevent="onSubmit">
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" v-model="username" />
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" v-model="email" />
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" v-model="password" />
-      <button type="submit">Submit</button>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <div class="input-wrapper">
+          <font-awesome-icon :icon="['fas', 'user']" class="form-icon" />
+          <input
+            type="text"
+            id="username"
+            name="username"
+            v-model="username"
+            required
+          />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <div class="input-wrapper">
+          <font-awesome-icon :icon="['fas', 'envelope']" class="form-icon" />
+          <input
+            type="email"
+            id="email"
+            name="email"
+            v-model="email"
+            required
+          />
+        </div>
+      </div>
+      <div class="buttons">
+        <button type="submit">Submit</button>
+        <button @click="$emit('close')">Close</button>
+      </div>
     </form>
-    <button @click="$emit('close')">Close</button>
   </div>
 </template>
 
@@ -26,8 +48,6 @@ export default {
     return {
       username: "",
       email: "",
-      password: "",
-      profile_pic: null,
     };
   },
   created() {
@@ -38,26 +58,22 @@ export default {
       if (newUser) {
         this.username = newUser.username;
         this.email = newUser.email;
-        this.password = newUser.password;
       }
     },
   },
   methods: {
     ...mapActions(["fetchUser", "updateUser"]),
-    onFileChange(e) {
-      this.profile_pic = e.target.files[0];
-    },
     onSubmit() {
       const userData = {
         username: this.username,
         email: this.email,
-        password: this.password,
-        profile_pic: this.profile_pic,
       };
 
       console.log("User data:", userData);
 
-      this.updateUser(userData);
+      this.updateUser(userData).then(() => {
+        this.$emit("close");
+      });
     },
   },
 };
@@ -72,28 +88,47 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #000000;
+  background-color: #00000080;
+  border-radius: 30px;
+  border-color: #1b1b1b;
+  border: 6px solid #a3ffb3;
+  box-shadow: 0px 0px 100px 0px #a3ffb3;
   z-index: 2;
+  backdrop-filter: blur(20px);
 }
+
 h1 {
-  color: #f1f1f1;
+  color: #a3ffb3;
+  text-shadow: 0 0 12px #a3ffb3;
   font-family: "Montserrat", sans-serif;
 }
+
 form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+
 label {
   margin-top: 20px;
-  color: #f1f1f1;
+  color: #ffffff;
+  text-shadow: 0 0 12px #ffffff;
   font-family: "Montserrat", sans-serif;
+  align-self: flex-start;
+  display: block;
+  text-align: left;
 }
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
 input {
-  padding: 10px 20px;
-  margin-top: 20px;
-  width: 500px;
+  padding: 10px 20px 10px 40px;
+  margin-top: 10px;
+  width: 400px;
   border-radius: 10px;
   border: 1px solid #ffffff;
   background-color: #0e0e0e;
@@ -105,15 +140,28 @@ input:focus {
   border: 1px solid #a3ffb3;
 }
 
-#profile-pic {
-  padding: 10px 20px;
-  margin-top: 20px;
-  width: 500px;
-}
-
 button {
   padding: 10px 20px;
   margin-top: 20px;
-  width: 500px;
+  width: 100%;
+}
+
+.buttons {
+  margin-top: 20px;
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.form-icon {
+  position: absolute;
+  left: 10px;
+  top: 58%;
+  transform: translateY(-50%);
+  color: #a3ffb3;
+  font-size: 1.2em;
 }
 </style>
