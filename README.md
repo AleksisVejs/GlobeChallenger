@@ -20,7 +20,8 @@ node server.js
 1. [Introduction](#introduction)
 2. [Features](#features)
 3. [Game Modes](#game-modes)
-4. [Educational Experience](#educational-experience)
+4. [Points](#points)
+5. [Educational Experience](#educational-experience)
 
 ## Introduction
 
@@ -58,6 +59,10 @@ Welcome to Globe Challenger, a geography quiz game that challenges your knowledg
 ### 🏛️ Capital Game:
   - Given a country and four capitals, you need to guess which capital is the correct one for the given country.
   - Accumulate points for each correct guess, but be cautious; incorrect guesses deduct points. Avoid reaching below zero points to stay in the game. 🏆
+
+## Points:
+  - If you are logged into the website, you have the chance to earn points from the game modes that offer them!
+  - Your accumulated points from each game mode can be viewed in your profile tab. 👤
 
 ## Educational Experience:
 Globe Challenger not only entertains but also enriches your understanding of world geography. It serves as an excellent tool for:
