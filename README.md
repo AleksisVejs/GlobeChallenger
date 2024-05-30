@@ -2,7 +2,7 @@
 
 ## How to run
 Clone the repository, open the repository folder in terminal and type these commands:
-- Move to the root folder and run these commands:
+- Move to the root folder and install the neccesary components:
 ```
 cd GlobeChallenger
 npm install
