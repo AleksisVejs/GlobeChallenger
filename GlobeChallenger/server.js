@@ -2,13 +2,17 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const sqlite3 = require("sqlite3").verbose();
+const path = require("path");
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(bodyParser.json());
 app.use(cors());
+
+// Serve static files
+app.use(express.static(path.join(__dirname, 'dist')));
 
 // JWT
 const jwt = require("jsonwebtoken");
@@ -306,6 +310,10 @@ app.get("/api/scores/:userId", (req, res) => {
 
     res.status(200).json({ scores });
   });
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 // Start server

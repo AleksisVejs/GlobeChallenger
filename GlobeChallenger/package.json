@@ -25,6 +25,7 @@
     "font-awesome": "^4.7.0",
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.1",
+    "path": "^0.12.7",
     "promise-queue": "^2.2.5",
     "sqlite3": "^5.1.7",
     "vue": "^3.3.4",
