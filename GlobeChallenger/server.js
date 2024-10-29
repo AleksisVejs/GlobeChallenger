@@ -3,6 +3,8 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -11,8 +13,18 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(cors());
 
+// Use Helmet to set security headers
+app.use(helmet());
+
 // Serve static files
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, "dist")));
+
+// Rate limiting to prevent brute-force attacks
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+});
+app.use(limiter);
 
 // JWT
 const jwt = require("jsonwebtoken");
@@ -312,8 +324,54 @@ app.get("/api/scores/:userId", (req, res) => {
   });
 });
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+app.get("/api/leaderboard", async (req, res) => {
+  try {
+    const sqlQuery = `  
+      SELECT gs.game_id, g.name as game_name, gs.user_id, gs.difficulty_id, gs.region
+      , MAX(gs.score) as max_score
+      FROM game_scores gs
+      LEFT JOIN games g ON gs.game_id = g.id  
+      GROUP BY gs.game_id, gs.user_id, gs.difficulty_id, gs.region
+      ORDER BY gs.game_id, max_score DESC
+    `;
+
+    db.all(sqlQuery, [], (err, rows) => {
+      if (err) {
+        console.error("Failed to fetch leaderboard:", err.message);
+        return res.status(500).json({ error: "Failed to fetch leaderboard" });
+      }
+
+      if (!rows.length) {
+        return res
+          .status(200)
+          .json({ leaderboard: [], message: "No scores found" });
+      }
+
+      const leaderboard = rows.reduce((acc, row) => {
+        if (!acc[row.game_id]) acc[row.game_id] = { game_name: row.game_name };
+
+        if (!acc[row.game_id].users) acc[row.game_id].users = [];
+        acc[row.game_id].users.push({
+          user_id: row.user_id,
+          difficulty_id: row.difficulty_id,
+          region: row.region,
+
+          max_score: row.max_score,
+        });
+
+        return acc;
+      }, {});
+
+      res.status(200).json({ leaderboard });
+    });
+  } catch (error) {
+    console.error("Failed to fetch leaderboard:", error.message);
+    return res.status(500).json({ error: "Failed to fetch leaderboard" });
+  }
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
 // Start server
