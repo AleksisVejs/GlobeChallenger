@@ -8,6 +8,8 @@ const rateLimit = require("express-rate-limit");
 const sanitizeHtml = require('sanitize-html');
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const csurf = require('csurf');
+const csrfProtection = csurf({ cookie: true });
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -32,6 +34,9 @@ const limiter = rateLimit({
   max: 100, // limit each IP to 100 requests per windowMs
 });
 app.use(limiter);
+
+// CSRF protection
+app.use(csrfProtection);
 
 // Connect to SQLite database
 const db = new sqlite3.Database("./db/database.db", (err) => {
