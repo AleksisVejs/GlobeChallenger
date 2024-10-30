@@ -35,8 +35,14 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-// CSRF protection
-app.use(csrfProtection);
+// Modify the CSRF protection to exclude API routes
+app.use((req, res, next) => {
+  if (req.path.startsWith('/api/')) {
+    next();
+  } else {
+    csrfProtection(req, res, next);
+  }
+});
 
 // Connect to SQLite database
 const db = new sqlite3.Database("./db/database.db", (err) => {
@@ -338,13 +344,26 @@ app.get("/api/scores/:userId", (req, res) => {
 
 app.get("/api/leaderboard", async (req, res) => {
   try {
-    const sqlQuery = `  
-      SELECT gs.game_id, g.name as game_name, gs.user_id, gs.difficulty_id, gs.region
-      , MAX(gs.score) as max_score
+    const sqlQuery = `
+      SELECT 
+        gs.game_id,
+        g.name as game_name, 
+        gs.user_id,
+        u.username,
+        gs.difficulty_id,
+        d.name as difficulty_name,
+        gs.region,
+        gs.score,
+        RANK() OVER (
+          PARTITION BY gs.game_id, gs.difficulty_id, gs.region
+          ORDER BY gs.score DESC
+        ) as rank
       FROM game_scores gs
-      LEFT JOIN games g ON gs.game_id = g.id  
-      GROUP BY gs.game_id, gs.user_id, gs.difficulty_id, gs.region
-      ORDER BY gs.game_id, max_score DESC
+      LEFT JOIN games g ON gs.game_id = g.id
+      LEFT JOIN users u ON gs.user_id = u.id
+      LEFT JOIN difficulties d ON gs.difficulty_id = d.id
+      WHERE gs.score > 0
+      ORDER BY gs.game_id, gs.difficulty_id, gs.region, gs.score DESC
     `;
 
     db.all(sqlQuery, [], (err, rows) => {
@@ -353,6 +372,8 @@ app.get("/api/leaderboard", async (req, res) => {
         return res.status(500).json({ error: "Failed to fetch leaderboard" });
       }
 
+      console.log("Leaderboard Rows:", rows);
+
       if (!rows.length) {
         return res
           .status(200)
@@ -360,21 +381,41 @@ app.get("/api/leaderboard", async (req, res) => {
       }
 
       const leaderboard = rows.reduce((acc, row) => {
-        if (!acc[row.game_id]) acc[row.game_id] = { game_name: row.game_name };
+        // Initialize game entry if it doesn't exist
+        if (!acc[row.game_id]) {
+          acc[row.game_id] = {
+            game_name: row.game_name,
+            difficulties: {}
+          };
+        }
 
-        if (!acc[row.game_id].users) acc[row.game_id].users = [];
-        acc[row.game_id].users.push({
-          user_id: row.user_id,
-          difficulty_id: row.difficulty_id,
-          region: row.region,
+        // Initialize difficulty entry if it doesn't exist
+        if (!acc[row.game_id].difficulties[row.difficulty_id]) {
+          acc[row.game_id].difficulties[row.difficulty_id] = {
+            difficulty_name: row.difficulty_name,
+            regions: {}
+          };
+        }
 
-          max_score: row.max_score,
+        // Initialize region entry if it doesn't exist
+        if (!acc[row.game_id].difficulties[row.difficulty_id].regions[row.region]) {
+          acc[row.game_id].difficulties[row.difficulty_id].regions[row.region] = [];
+        }
+
+        // Add score entry to the appropriate region
+        acc[row.game_id].difficulties[row.difficulty_id].regions[row.region].push({
+          rank: row.rank,
+          username: row.username,
+          score: row.score
         });
 
         return acc;
       }, {});
 
-      res.status(200).json({ leaderboard });
+      res.status(200).json({ 
+        leaderboard,
+        timestamp: new Date().toISOString()
+      });
     });
   } catch (error) {
     console.error("Failed to fetch leaderboard:", error.message);

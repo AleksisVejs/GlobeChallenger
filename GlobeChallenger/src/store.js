@@ -9,6 +9,7 @@ const store = createStore({
     token: localStorage.getItem(TOKEN_KEY) || null,
     errorMsg: null,
     userScores: {},
+    leaderboard: [],
   },
   mutations: {
     setUser(state, user) {
@@ -31,6 +32,9 @@ const store = createStore({
     },
     setUserScores(state, scores) {
       state.userScores = scores;
+    },
+    setLeaderboard(state, leaderboard) {
+      state.leaderboard = leaderboard;
     },
   },
   actions: {
@@ -247,6 +251,15 @@ const store = createStore({
         }
       } catch (error) {
         console.error("Failed to delete user:", error.message);
+      }
+    },
+
+    async fetchLeaderboard({ commit }) {
+      try {
+        const response = await axios.get("http://localhost:3000/api/leaderboard");
+        commit("setLeaderboard", response.data.leaderboard);
+      } catch (error) {
+        console.error("Failed to fetch leaderboard:", error);
       }
     },
   },

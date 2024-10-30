@@ -76,12 +76,17 @@
         </div>
       </button>
     </div>
+    <LeaderBoard />
   </div>
 </template>
 
 <script>
+import LeaderBoard from "../components/LeaderBoard.vue";
 export default {
   name: "HomeView",
+  components: {
+    LeaderBoard,
+  },
   methods: {
     navigateToFlagGame() {
       this.$router.push("/flagGame");
@@ -96,7 +101,7 @@ export default {
       this.$router.push("/capitalGame");
     },
     randomDuration() {
-      return (Math.random() * 1 + 2).toFixed(2); //
+      return (Math.random() * 1 + 2).toFixed(2);
     },
   },
 };
@@ -129,8 +134,6 @@ export default {
   box-shadow: 0px 0px 90px 0px #a3ffb3;
   padding: 60px;
   margin: 20px;
-  border-style: solid;
-  border-color: #1b1b1b;
   border: 6px solid #a3ffb3;
   text-align: center;
   width: 350px;
