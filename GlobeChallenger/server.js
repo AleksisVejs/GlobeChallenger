@@ -5,6 +5,9 @@ const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
+const sanitizeHtml = require('sanitize-html');
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -12,11 +15,15 @@ const port = process.env.PORT || 3000;
 // Middleware
 app.use(bodyParser.json());
 app.use(cors());
-
-// Use Helmet to set security headers
 app.use(helmet());
-
-// Serve static files
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"],
+    },
+  })
+);
 app.use(express.static(path.join(__dirname, "dist")));
 
 // Rate limiting to prevent brute-force attacks
@@ -25,9 +32,6 @@ const limiter = rateLimit({
   max: 100, // limit each IP to 100 requests per windowMs
 });
 app.use(limiter);
-
-// JWT
-const jwt = require("jsonwebtoken");
 
 // Connect to SQLite database
 const db = new sqlite3.Database("./db/database.db", (err) => {
@@ -39,12 +43,15 @@ const db = new sqlite3.Database("./db/database.db", (err) => {
 });
 
 // Define routes
-app.post("/api/register", (req, res) => {
+app.post("/api/register", async (req, res) => {
   const { email, username, password } = req.body;
+  const sanitizedEmail = sanitizeHtml(email);
+  const sanitizedUsername = sanitizeHtml(username);
+  const hashedPassword = await bcrypt.hash(sanitizeHtml(password), 10);
   const createdAt = new Date().toISOString().split("T")[0];
   db.run(
     "INSERT INTO users (email, username, password, createdAt) VALUES (?, ?, ?, ?)",
-    [email, username, password, createdAt],
+    [sanitizedEmail, sanitizedUsername, hashedPassword, createdAt],
     (err) => {
       if (err) {
         console.error("Registration failed:", err.message);
@@ -59,14 +66,14 @@ app.post("/api/register", (req, res) => {
 app.post("/api/login", (req, res) => {
   const { username, password } = req.body;
   db.get(
-    "SELECT * FROM users WHERE username = ? AND password = ?",
-    [username, password],
-    (err, row) => {
+    "SELECT * FROM users WHERE username = ?",
+    [username],
+    async (err, row) => {
       if (err) {
         console.error("Login failed:", err.message);
         res.status(500).send(err.message);
-      } else if (row) {
-        // User found, return user data and token
+      } else if (row && await bcrypt.compare(password, row.password)) {
+        // User found and password matches, return user data and token
         const { id, email, username, createdAt } = row;
         const user = { id, email, username, createdAt };
         const token = jwt.sign({ id: user.id }, "secret_key", {
@@ -80,6 +87,8 @@ app.post("/api/login", (req, res) => {
     }
   );
 });
+
+// Other routes remain unchanged...
 
 app.post("/api/logout", (req, res) => {
   res.status(200).send("Logout successful");
