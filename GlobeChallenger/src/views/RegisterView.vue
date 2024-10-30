@@ -38,7 +38,7 @@
               @click="togglePasswordVisibility"
             />
           </div>
-          <button type="submit">Register</button>
+          <button type="submit" :disabled="passwordError">Register</button>
         </form>
         <p class="route-to-login-text">Already an existing user?</p>
         <router-link to="/login" class="route-to-login">
@@ -58,7 +58,22 @@ export default {
   },
   computed: {
     errorMessage() {
-      return this.$store.getters.errorMsg;
+      if (this.$store.getters.errorMsg) {
+        return this.$store.getters.errorMsg;
+      }
+      return this.passwordError;
+    },
+    passwordError() {
+      if (this.password.length < 6) {
+        return "Password must be at least 6 characters long.";
+      }
+      if (!/[A-Z]/.test(this.password)) {
+        return "Password must contain at least one uppercase letter.";
+      }
+      if (!/[!@#$%^&*(),.?":{}|<>]/.test(this.password)) {
+        return "Password must contain at least one special symbol.";
+      }
+      return null;
     }
   },
   data() {
@@ -76,6 +91,9 @@ export default {
       this.iconClass = this.showPassword ? "fas fa-eye-slash" : "fas fa-eye";
     },
     register() {
+      if (this.passwordError) {
+        return;
+      }
       this.$store
         .dispatch("register", {
           email: this.email,
@@ -241,6 +259,12 @@ export default {
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 30px #202020 inset !important;
   -webkit-text-fill-color: #ffffff !important;
+}
+
+.error-message {
+  position: absolute;
+  text-align: center;
+  font-size: 0.9rem;
 }
 
 @media (max-width: 768px) {
