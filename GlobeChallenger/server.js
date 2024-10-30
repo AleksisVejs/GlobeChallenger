@@ -93,8 +93,6 @@ app.post("/api/login", (req, res) => {
   );
 });
 
-// Other routes remain unchanged...
-
 app.post("/api/logout", (req, res) => {
   res.status(200).send("Logout successful");
 });
